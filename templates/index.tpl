@@ -5,7 +5,7 @@
         src="static/scripts/common/jquery.js"></script>
 <script type="text/javascript">
 $(function(){
-    $('h1').hide();
+    $('h1').html("{$user.name}");
 });
 </script>
 </head>

@@ -1,6 +1,9 @@
 <?
-$_dbconn_host = "localhost";
-$_dbconn_user = "root";
-$_dbconn_pass = "orxszlyzr";
-$_dbconn_db   = "pgponline";
+$_database_credentials = array(
+    'type'=>'mysql',
+    'server'=>'localhost',
+    'user'=>'root',
+    'password'=>'orxszlyzr',
+    'dbname'=>'pgponline',
+);
 ?>
