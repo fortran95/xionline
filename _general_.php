@@ -3,6 +3,7 @@ $basepath = dirname(__FILE__);
 
 # Read in user configuration
 include("$basepath/config/database.php");
+include("$basepath/config/security.php");
 
 ###############################################################################
 
