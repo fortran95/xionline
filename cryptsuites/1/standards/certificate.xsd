@@ -1,17 +1,37 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            elementFormDefault="qualified">
+
+    <!-- certificateID: identifier for all certificates -->
+    <xs:simpleType name="certificateID">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9A-Fa-f]{32}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- keyID: identifier for each key blocks -->
+    <xs:simpleType name="keyID">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9A-Fa-f]{8}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- base64data: holds base64-encoded data -->
+    <xs:simpleType name="base64data">
+        <xs:restriction base="xs:token">
+            <xs:pattern value="[A-Za-z0-9\+/= ]*"/>
+            <xs:whiteSpace value="collapse"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- STRUCTURE NOW -->
     <xs:element name="certificate"><xs:complexType><xs:sequence>
 
         <!-- Base Info -->
         <xs:element name="base"><xs:complexType><xs:sequence>
 
             <!-- id: an unique ID for this certificate. -->
-            <xs:element name="id" ><xs:simpleType>
-                <xs:restriction base="xs:string">
-                    <xs:pattern value="[0-9A-Fa-f]{32}"/>
-                </xs:restriction>
-            </xs:simpleType></xs:element>
+            <xs:element name="id" type="certificateID"/>
 
             <!-- title: a brief name for this certificate. -->
             <xs:element name="title" ><xs:simpleType>
@@ -45,26 +65,17 @@
                 <xs:complexType><xs:sequence>
                     
                     <!-- id: short hash of the key block -->
-                    <xs:element name="id"><xs:simpleType>
-                        <xs:restriction base="xs:string">
-                            <xs:pattern value="[0-9A-Za-z]{8}"/>
-                        </xs:restriction>
-                    </xs:simpleType></xs:element>
+                    <xs:element name="id" type="keyID"/>
 
                     <!-- type: RSA, DSA, Elgamal or EC? -->
                     <xs:element name="type"><xs:simpleType>
                         <xs:restriction base="xs:string">
-                            <xs:enumeration value="RSA"/> 
+                            <xs:enumeration value="RSA.PKCS1"/> 
                         </xs:restriction>
                     </xs:simpleType></xs:element>
 
                     <!-- data: Base64 encoded key block data -->
-                    <xs:element name="data"><xs:simpleType>
-                        <xs:restriction base="xs:token">
-                            <xs:pattern value="[A-Za-z0-9\+/= ]*"/>
-                            <xs:whiteSpace value="collapse"/>
-                        </xs:restriction>
-                    </xs:simpleType></xs:element>
+                    <xs:element name="data" type="base64data"/>
 
                     <!-- expire: When this block expires. -->
                     <xs:element name="expire" type="xs:dateTime"/>
@@ -74,6 +85,37 @@
         </xs:sequence></xs:complexType></xs:element>
 
         <!-- Signatures -->
+        <xs:element name="signatures"><xs:complexType><xs:sequence>
+            <xs:element name="signature" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <!-- contains: What this signature granted or confirmed. -->
+                        <xs:element name="contains"><xs:complexType><xs:sequence>
+
+                            <!-- grant: Text string containing a specification of some type of authorities. -->
+                            <xs:element name="grant" minOccurs="0" maxOccurs="unbounded" type="xs:string"/>
+                            <!-- sure: Confirm a key id stated above -->
+                            <xs:element name="sure" minOccurs="0" maxOccurs="unbounded" type="keyID"/>
+
+                        </xs:sequence></xs:complexType></xs:element>
+
+                        <!-- verify: holds data verifying above statements. -->
+                        <xs:element name="verify"><xs:complexType><xs:simpleContent>
+                            <xs:extension base="base64data">
+                                <xs:attribute name="key" type="keyID"/>
+                            </xs:extension>
+                        </xs:simpleContent></xs:complexType></xs:element>
+
+                    </xs:sequence>
+                
+                    <!-- from: Who made this signature. -->
+                    <xs:attribute name="from" type="certificateID" />
+                    <!-- expire: When this signatrue expires. -->
+                    <xs:attribute name="expire" type="xs:dateTime"/>
+
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence></xs:complexType></xs:element>
 
     </xs:sequence></xs:complexType></xs:element>
 </xs:schema>
