@@ -1,4 +1,4 @@
-<certificate id="00000000000000000000000000000000">
+<certificate id="00000000000000000000000000000000" use="public">
     <base>
         <title>Title</title>
         <description>Some Description</description>
