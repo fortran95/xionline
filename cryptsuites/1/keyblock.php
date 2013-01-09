@@ -21,15 +21,45 @@ class KeyBlock{
         $this->readData($data);
     }
     public function public_encrypt($data){
+        switch($this->keytype){
+            case 'RSA.PKCS1':
+                break;
+            default:
+                break;
+        }
+        return false;
     }
     public function private_decrypt($data,$passphrase){
+        switch($this->keytype){
+            case 'RSA.PKCS1':
+                break;
+            default:
+                break;
+        }
+        return false;
     }
     public function sign($data,$passphrase){
+        switch($this->keytype){
+            case 'RSA.PKCS1':
+                break;
+            default:
+                break;
+        }
+        return false;
     }
     public function verify($source,$data){
-        
+        switch($this->keytype){
+            case 'RSA.PKCS1':
+                break;
+            default:
+                break;
+        }
+        return false;        
     }
 
+    private function deriveKeyBlockID($data,$expire){
+        
+    }
     private function readData($data){
         foreach(array('type','use','data') as $index)
             if(!isset($data[$index]))

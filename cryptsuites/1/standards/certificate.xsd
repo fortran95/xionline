@@ -24,14 +24,14 @@
     <!-- certificateID: identifier for all certificates -->
     <xs:simpleType name="certificateID">
         <xs:restriction base="xs:string">
-            <xs:pattern value="[0-9A-Fa-f]{32}"/>
+            <xs:pattern value="[0-9A-Fa-f]{40}"/>
         </xs:restriction>
     </xs:simpleType>
 
     <!-- keyID: identifier for each key blocks -->
     <xs:simpleType name="keyID">
         <xs:restriction base="xs:string">
-            <xs:pattern value="[0-9A-Fa-f]{8}"/>
+            <xs:pattern value="[0-9A-Fa-f]{32}"/>
         </xs:restriction>
     </xs:simpleType>
 
