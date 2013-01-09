@@ -1,0 +1,8 @@
+<certificate>
+    <base>
+        <id>ID</id>
+        <title>Title</title>
+        <description>Some Description</description>
+        <contact type="a"></contact>
+    </base>
+</certificate>
