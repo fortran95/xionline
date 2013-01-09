@@ -1,11 +1,12 @@
 <?
 Interface PublicKeyCipher{
     public function __construct($load=false,$datablock='',$public=false);
-    public function public_encrypt($plaintext);
-    public function private_decrypt($ciphertext,$passphrase);
+    public function publicEncrypt($plaintext);
+    public function privateDecrypt($ciphertext,$passphrase);
     public function sign($fulltext,$passphrase);
     public function verify($fulltext,$signature);
     public function generate($parameterArray,$passphrase);
+    public function getID();
 }
 
 $cryptsuite_pkciphers_supported = array();

@@ -20,45 +20,15 @@ class KeyBlock{
 
         $this->readData($data);
     }
-    public function public_encrypt($data){
-        switch($this->keytype){
-            case 'RSA.PKCS1':
-                
-                break;
-            default:
-                break;
-        }
-        return false;
+    public function publicEncrypt($data){
     }
-    public function private_decrypt($data,$passphrase){
-        switch($this->keytype){
-            case 'RSA.PKCS1':
-                break;
-            default:
-                break;
-        }
-        return false;
+    public function privateDecrypt($data,$passphrase){
     }
     public function sign($data,$passphrase){
-        switch($this->keytype){
-            case 'RSA.PKCS1':
-                break;
-            default:
-                break;
-        }
-        return false;
     }
     public function verify($source,$data){
-        switch($this->keytype){
-            case 'RSA.PKCS1':
-                break;
-            default:
-                break;
-        }
-        return false;        
     }
-
-    private function deriveKeyBlockID($data,$expire){
+    private function deriveKeyBlockID($expire){
         
     }
     private function readData($data){
@@ -66,7 +36,7 @@ class KeyBlock{
             if(!isset($data[$index]))
                 throw CryptoException("Key [$index] not specified when initializing this class.");
 
-        if(!in_array($this->_ciphers,$data['type']))
+        if(!isset($this->_ciphers[$data['type']]))
             throw CryptoException("Key [type]({$data['type']}) not supported.");
 
         if($data['use'] != 'public' && $data['use'] != 'private')
