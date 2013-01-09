@@ -9,10 +9,19 @@ class User{
         $this->userid = $userid;
         $this->username = $username;
 
-        $this->jabber = $this->getJabberAccounts();
+        $this->certs = $this->getCerts();
     }
-    private function getJabberAccounts(){
-        # TODO decrypt & load Jabber Accounts for this user.
+    private function getCerts(){        
+        $userq = $this->db->querySQL("SELECT * FROM certs
+                                      WHERE userid = '{$this->userid}'");
+        if(count($userq)<1)
+            return false;
+        
+        $returnValue = array();
+        foreach($userq as $cert)
+            $returnValue[] = (new Certificate($userq['content'])); 
+        
+        return $returnValue;
     }
 }
 ?>
