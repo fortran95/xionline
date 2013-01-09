@@ -6,22 +6,17 @@
         <contact type="a">a</contact>
     </base>
     <keys>
-        <block>
-            <id>01234567</id>
-            <type>RSA.PKCS1</type>
-            <data>
+        <block id="49DEFF2E" expire="2013-12-31T23:59:59Z" type="RSA.PKCS1">
  VGhpcyBpcyBhIHNsaWdodCBsb25nIHNlbnRlbmNlIHdoaWNoIGlzIHNvIGxvbmcgdGhhdCBiYXNl 
  NjQgZW5jb2RpbmcgaXQgd2lsbCBsZWFkIGEgcHJvZHVjaW5nIG9mIG11bHRpcGxlIGxpbmVzLg== 
-            </data>
-            <expire>2013-12-31T00:00:00Z</expire>
         </block>
     </keys>
     <signatures>
         <signature expire="2013-12-31T00:00:00Z" from="101112131415161718191A1B1C1D1E1F">
             <contains>
             </contains>
-            <verify key="39DEFF2E">
-                
+            <verify key="39DEFF2E">                
+VGhpcyBpcyBhIHNsaWdodCBsb25nIHNlbnRlbmNlIHdoaWNoIGlzIHNvIGxvbmcgdGhhdCBiYXNl 
             </verify>
         </signature>
     </signatures>

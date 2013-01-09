@@ -62,25 +62,24 @@
         <!-- Public Key Blocks -->
         <xs:element name="keys"><xs:complexType><xs:sequence>
             <xs:element name="block" minOccurs="1" maxOccurs="unbounded">
-                <xs:complexType><xs:sequence>
-                    
-                    <!-- id: short hash of the key block -->
-                    <xs:element name="id" type="keyID"/>
+                <xs:complexType><xs:simpleContent>
+                    <xs:extension base="base64data">
 
-                    <!-- type: RSA, DSA, Elgamal or EC? -->
-                    <xs:element name="type"><xs:simpleType>
-                        <xs:restriction base="xs:string">
-                            <xs:enumeration value="RSA.PKCS1"/> 
-                        </xs:restriction>
-                    </xs:simpleType></xs:element>
+                        <!-- id: short hash of the key block -->
+                        <xs:attribute name="id" type="keyID"/>
 
-                    <!-- data: Base64 encoded key block data -->
-                    <xs:element name="data" type="base64data"/>
+                        <!-- expire: When this block expires. -->
+                        <xs:attribute name="expire" type="xs:dateTime"/>
 
-                    <!-- expire: When this block expires. -->
-                    <xs:element name="expire" type="xs:dateTime"/>
+                        <!-- type: RSA, DSA, Elgamal or EC? -->
+                        <xs:attribute name="type"><xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="RSA.PKCS1"/> 
+                            </xs:restriction>
+                        </xs:simpleType></xs:attribute>
 
-                </xs:sequence></xs:complexType>
+                    </xs:extension>
+                </xs:simpleContent></xs:complexType>
             </xs:element>
         </xs:sequence></xs:complexType></xs:element>
 
