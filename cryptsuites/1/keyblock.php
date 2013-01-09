@@ -23,6 +23,9 @@ class KeyBlock{
     public function public_encrypt($data){
         switch($this->keytype){
             case 'RSA.PKCS1':
+                $rsa = new Crypt_RSA();
+                $rsa->loadKey($this->keydata);
+                
                 break;
             default:
                 break;
@@ -73,7 +76,7 @@ class KeyBlock{
 
         $this->keytype = $data['type'];
         $this->keyuse = ($data['use'] == 'public');
-        $this->keydata  = $data['data']);
+        $this->keydata  = $data['data'];
 
     }
 }
