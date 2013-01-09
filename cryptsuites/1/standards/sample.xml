@@ -5,4 +5,15 @@
         <description>Some Description</description>
         <contact type="a">a</contact>
     </base>
+    <keys>
+        <block>
+            <id>01234567</id>
+            <type>RSA</type>
+            <data>
+ VGhpcyBpcyBhIHNsaWdodCBsb25nIHNlbnRlbmNlIHdoaWNoIGlzIHNvIGxvbmcgdGhhdCBiYXNl 
+ NjQgZW5jb2RpbmcgaXQgd2lsbCBsZWFkIGEgcHJvZHVjaW5nIG9mIG11bHRpcGxlIGxpbmVzLg== 
+            </data>
+            <expire>2013-12-31T00:00:00Z</expire>
+        </block>
+    </keys>
 </certificate>

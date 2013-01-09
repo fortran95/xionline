@@ -2,28 +2,78 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            elementFormDefault="qualified">
     <xs:element name="certificate"><xs:complexType><xs:sequence>
+
+        <!-- Base Info -->
         <xs:element name="base"><xs:complexType><xs:sequence>
+
+            <!-- id: an unique ID for this certificate. -->
             <xs:element name="id" ><xs:simpleType>
                 <xs:restriction base="xs:string">
                     <xs:pattern value="[0-9A-Fa-f]{32}"/>
                 </xs:restriction>
             </xs:simpleType></xs:element>
+
+            <!-- title: a brief name for this certificate. -->
             <xs:element name="title" ><xs:simpleType>
                 <xs:restriction base="xs:string">
                     <xs:minLength value="5"/>
                     <xs:maxLength value="50"/>
                 </xs:restriction>
             </xs:simpleType></xs:element>
+
+            <!-- description: some space leaving for descriptions. -->
             <xs:element name="description"><xs:simpleType>
                 <xs:restriction base="xs:string">
                     <xs:maxLength value="300"/>
                 </xs:restriction>
             </xs:simpleType></xs:element>
-            <xs:element name="contact" minOccurs="0" maxOccurs="unbounded"><xs:complexType><xs:simpleContent>
-                <xs:extension base="xs:string">
-                    <xs:attribute name="type" type="xs:string"/>
-                </xs:extension>
-            </xs:simpleContent></xs:complexType></xs:element>
+
+            <!-- contact: optional, showing who may use this certificate. -->
+            <xs:element name="contact" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType><xs:simpleContent>
+                    <xs:extension base="xs:string">
+                        <xs:attribute name="type" type="xs:string"/>
+                    </xs:extension>
+                </xs:simpleContent></xs:complexType>
+            </xs:element>
+
         </xs:sequence></xs:complexType></xs:element>
+
+        <!-- Public Key Blocks -->
+        <xs:element name="keys"><xs:complexType><xs:sequence>
+            <xs:element name="block" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType><xs:sequence>
+                    
+                    <!-- id: short hash of the key block -->
+                    <xs:element name="id"><xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:pattern value="[0-9A-Za-z]{8}"/>
+                        </xs:restriction>
+                    </xs:simpleType></xs:element>
+
+                    <!-- type: RSA, DSA, Elgamal or EC? -->
+                    <xs:element name="type"><xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="RSA"/> 
+                        </xs:restriction>
+                    </xs:simpleType></xs:element>
+
+                    <!-- data: Base64 encoded key block data -->
+                    <xs:element name="data"><xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:pattern value="[A-Za-z0-9\+/= ]*"/>
+                            <xs:whiteSpace value="collapse"/>
+                        </xs:restriction>
+                    </xs:simpleType></xs:element>
+
+                    <!-- expire: When this block expires. -->
+                    <xs:element name="expire" type="xs:dateTime"/>
+
+                </xs:sequence></xs:complexType>
+            </xs:element>
+        </xs:sequence></xs:complexType></xs:element>
+
+        <!-- Signatures -->
+
     </xs:sequence></xs:complexType></xs:element>
 </xs:schema>
