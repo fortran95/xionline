@@ -1,15 +1,29 @@
 <?xml version="1.0"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" >
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
     <xs:element name="certificate"><xs:complexType><xs:sequence>
         <xs:element name="base"><xs:complexType><xs:sequence>
-            <xs:element name="id" type="xs:string"/>
-            <xs:element name="title" type="xs:string"/>
-            <xs:element name="description" type="xs:string"/>
-            <xs:element name="contact" maxOccurs="unbounded">
-                <xs:complexType>
+            <xs:element name="id" ><xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="[0-9A-Fa-f]{32}"/>
+                </xs:restriction>
+            </xs:simpleType></xs:element>
+            <xs:element name="title" ><xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:minLength value="5"/>
+                    <xs:maxLength value="50"/>
+                </xs:restriction>
+            </xs:simpleType></xs:element>
+            <xs:element name="description"><xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:maxLength value="300"/>
+                </xs:restriction>
+            </xs:simpleType></xs:element>
+            <xs:element name="contact" minOccurs="0" maxOccurs="unbounded"><xs:complexType><xs:simpleContent>
+                <xs:extension base="xs:string">
                     <xs:attribute name="type" type="xs:string"/>
-                </xs:complexType>
-            </xs:element>
+                </xs:extension>
+            </xs:simpleContent></xs:complexType></xs:element>
         </xs:sequence></xs:complexType></xs:element>
     </xs:sequence></xs:complexType></xs:element>
 </xs:schema>

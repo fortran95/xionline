@@ -1,8 +1,8 @@
 <certificate>
     <base>
-        <id>ID</id>
+        <id>000102030405060708090A0b0C0d0e0f</id>
         <title>Title</title>
         <description>Some Description</description>
-        <contact type="a"></contact>
+        <contact type="a">a</contact>
     </base>
 </certificate>
