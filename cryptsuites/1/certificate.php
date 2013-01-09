@@ -1,7 +1,16 @@
 <?
 class Certificate{
+    $base = array('title'=>'',
+                  'description'=>'',
+                  'contact'=>array(),);
+    $id = '';
+    $use = '';
+    $keys = array();
+    $signatures = array();
+
     public function __construct($certtext=''){
         $this->certtext = $certtext;
+
     }
     public function sign($text,$passphrase){
     }

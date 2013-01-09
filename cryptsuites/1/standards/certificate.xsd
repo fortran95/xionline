@@ -134,7 +134,7 @@
     </xs:sequence>
     
     <xs:attribute name="id" type="certificateID" use="required"/>
-    <xs:attribute name="use" use="required">        
+    <xs:attribute name="use" use="optional">        
         <xs:simpleType>
             <xs:restriction base="xs:string">
                 <xs:enumeration value="private"/>
