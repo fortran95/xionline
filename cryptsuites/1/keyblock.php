@@ -1,8 +1,5 @@
 <?
 class KeyBlock{
-
-    const IMPLEMENTED_ALGORITHMS = ';RSA.PKCS1;';
-
     public function __construct($data=false){
         /*
          * class KeyBlock
@@ -15,6 +12,9 @@ class KeyBlock{
          * $data has indexes of:
          *  type, use, data
          */
+        global $cryptsuite_pkciphers_supported;
+        $this->_ciphers = $cryptsuite_pkciphers_supported;
+
         if(!is_array($data))
             return;
 
@@ -23,8 +23,6 @@ class KeyBlock{
     public function public_encrypt($data){
         switch($this->keytype){
             case 'RSA.PKCS1':
-                $rsa = new Crypt_RSA();
-                $rsa->loadKey($this->keydata);
                 
                 break;
             default:
@@ -68,10 +66,10 @@ class KeyBlock{
             if(!isset($data[$index]))
                 throw CryptoException("Key [$index] not specified when initializing this class.");
 
-        if(strpos($this::IMPLEMENTED_ALGORITHMS,";{$data['type']};") === false)
+        if(!in_array($this->_ciphers,$data['type']))
             throw CryptoException("Key [type]({$data['type']}) not supported.");
 
-        if(strpos(';public;private;',";{$data['use']};") === false)
+        if($data['use'] != 'public' && $data['use'] != 'private')
             throw CryptoException("Key [use] invalid. Must be [public] or [private].");
 
         $this->keytype = $data['type'];
