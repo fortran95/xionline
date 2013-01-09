@@ -11,7 +11,7 @@ class Certificate{
     }
     public function decrypt($ciphertext,$passphrase){
     }
-    private function _parseCert(){
+    private function parseCert(){
         /*
          * Parse $this->certtext and refresh all info
          * stored in this class.
