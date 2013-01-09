@@ -2,6 +2,25 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            elementFormDefault="qualified">
 
+    <!-- publicKeyCipher: all supported public key ciphers. -->
+    <xs:simpleType name="publicKeyCipher">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="RSA.PKCS1"/> 
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- signAlgorithm: all supported public key ciphers. -->
+    <xs:simpleType name="signAlgorithm">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="SHA1"/>
+            <xs:enumeration value="SHA224"/>
+            <xs:enumeration value="SHA256"/>
+            <xs:enumeration value="SHA384"/>
+            <xs:enumeration value="SHA512"/>
+            <xs:enumeration value="WHIRLPOOL"/>
+        </xs:restriction>
+    </xs:simpleType>
+
     <!-- certificateID: identifier for all certificates -->
     <xs:simpleType name="certificateID">
         <xs:restriction base="xs:string">
@@ -30,9 +49,6 @@
         <!-- Base Info -->
         <xs:element name="base"><xs:complexType><xs:sequence>
 
-            <!-- id: an unique ID for this certificate. -->
-            <xs:element name="id" type="certificateID"/>
-
             <!-- title: a brief name for this certificate. -->
             <xs:element name="title" ><xs:simpleType>
                 <xs:restriction base="xs:string">
@@ -52,7 +68,7 @@
             <xs:element name="contact" minOccurs="0" maxOccurs="unbounded">
                 <xs:complexType><xs:simpleContent>
                     <xs:extension base="xs:string">
-                        <xs:attribute name="type" type="xs:string"/>
+                        <xs:attribute name="type" type="xs:string" use="required"/>
                     </xs:extension>
                 </xs:simpleContent></xs:complexType>
             </xs:element>
@@ -64,20 +80,12 @@
             <xs:element name="block" minOccurs="1" maxOccurs="unbounded">
                 <xs:complexType><xs:simpleContent>
                     <xs:extension base="base64data">
-
                         <!-- id: short hash of the key block -->
-                        <xs:attribute name="id" type="keyID"/>
-
+                        <xs:attribute name="id" type="keyID" use="required"/>
                         <!-- expire: When this block expires. -->
-                        <xs:attribute name="expire" type="xs:dateTime"/>
-
+                        <xs:attribute name="expire" type="xs:dateTime" use="optional"/>
                         <!-- type: RSA, DSA, Elgamal or EC? -->
-                        <xs:attribute name="type"><xs:simpleType>
-                            <xs:restriction base="xs:string">
-                                <xs:enumeration value="RSA.PKCS1"/> 
-                            </xs:restriction>
-                        </xs:simpleType></xs:attribute>
-
+                        <xs:attribute name="type" type="publicKeyCipher"/>
                     </xs:extension>
                 </xs:simpleContent></xs:complexType>
             </xs:element>
@@ -89,32 +97,43 @@
                 <xs:complexType>
                     <xs:sequence>
                         <!-- contains: What this signature granted or confirmed. -->
-                        <xs:element name="contains"><xs:complexType><xs:sequence>
+                        <xs:element name="contain"><xs:complexType><xs:sequence>
+
+                            <!-- sure: Confirm a key id stated above -->
+                            <xs:element name="sure" minOccurs="1" maxOccurs="unbounded"><xs:complexType>
+                                <xs:attribute name="of" type="keyID" use="required"/>
+                            </xs:complexType></xs:element>
 
                             <!-- grant: Text string containing a specification of some type of authorities. -->
-                            <xs:element name="grant" minOccurs="0" maxOccurs="unbounded" type="xs:string"/>
-                            <!-- sure: Confirm a key id stated above -->
-                            <xs:element name="sure" minOccurs="0" maxOccurs="unbounded" type="keyID"/>
+                            <xs:element name="grant" minOccurs="0" maxOccurs="unbounded"><xs:complexType>
+                                <xs:attribute name="name" type="xs:string" use="required"/>
+                                <xs:attribute name="value" type="xs:string" use="optional"/>
+                            </xs:complexType></xs:element>
 
                         </xs:sequence></xs:complexType></xs:element>
 
                         <!-- verify: holds data verifying above statements. -->
                         <xs:element name="verify"><xs:complexType><xs:simpleContent>
                             <xs:extension base="base64data">
-                                <xs:attribute name="key" type="keyID"/>
+                                <xs:attribute name="key" type="keyID" use="required"/>
+                                <xs:attribute name="algo" type="signAlgorithm" use="required"/>
                             </xs:extension>
                         </xs:simpleContent></xs:complexType></xs:element>
 
                     </xs:sequence>
                 
                     <!-- from: Who made this signature. -->
-                    <xs:attribute name="from" type="certificateID" />
+                    <xs:attribute name="from" type="certificateID" use="required"/>
                     <!-- expire: When this signatrue expires. -->
-                    <xs:attribute name="expire" type="xs:dateTime"/>
+                    <xs:attribute name="expire" type="xs:dateTime" use="optional"/>
 
                 </xs:complexType>
             </xs:element>
         </xs:sequence></xs:complexType></xs:element>
 
-    </xs:sequence></xs:complexType></xs:element>
+    </xs:sequence>
+    
+    <xs:attribute name="id" type="certificateID" use="required"/>
+
+    </xs:complexType></xs:element>
 </xs:schema>
