@@ -23,37 +23,49 @@ class KeyBlock{
     public function publicEncrypt($data){
         try{
             return $this->key->publicEncrypt($data);
-        }catch(Exception $e){
-            
-        }
+        }catch(Exception $e){}
         return false;
     }
-    public function privateDecrypt($data,$passphrase){
+    public function privateDecrypt($data){
+        try{
+            return $this->key->privateDecrypt($data);
+        }catch(Exception $e){}
+        return false;
     }
-    public function sign($data,$passphrase){
+    public function sign($data){
+        try{
+            return $this->key->sign($data,'sha1');
+        }catch(Exception $e){}
+        return false;
     }
-    public function verify($source,$data){
+    public function verify($data,$signature){
+        try{
+            return $this->key->verify($data,$signature);
+        }catch(Exception $e){}
+        return false;
     }
     private function deriveKeyBlockID($holderID,$expire){
         $keyID = $this->key->getID();
         $regulatedExpireTime = str(new timeRegulator($expire));
     }
     private function readData($data){
-        foreach(array('type','use','data') as $index)
+        /*
+         * Read in key block
+         *
+         * Passphrase should only be specified when this is a private key block.
+         */
+        foreach(array('type','passphrase','data') as $index)
             if(!isset($data[$index]))
                 throw CryptoException("Key [$index] not specified when initializing this class.");
 
         if(!isset($this->_ciphers[$data['type']]))
             throw CryptoException("Key [type]({$data['type']}) not supported.");
 
-        if($data['use'] != 'public' && $data['use'] != 'private')
-            throw CryptoException("Key [use] invalid. Must be [public] or [private].");
-
         $this->keytype = $data['type'];
-        $this->keyuse = ($data['use'] == 'public');
+        $this->keypassphrase = isset($data['passphrase'])?$data['passphrase']:'';
         $this->keydata  = $data['data'];
 
-        $this->key = (new $this->_ciphers[$data['type']](true,$this->keydata,$this->keyuse));
+        $this->key = (new $this->_ciphers[$data['type']]($this->keydata,$this->passphrase));
     }
 }
 ?>
