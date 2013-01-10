@@ -38,9 +38,21 @@ class PKC_RSA implements PublicKeyCipher{
             return false;
         }
     }
-    public function sign($fulltext,$digestmod='sha1'){}
-    public function verify($fulltext,$signature){}
-    public function generate($parameterArray){}
+    public function sign($fulltext,$digestmod='sha1'){
+        try{
+            $digest = sha1($fulltext);
+            $signature = $this->privatekey->sign($digest);
+            $return = new cipherText($signature);
+            $return->digest = $digestmod;
+            return $return;
+        }catch(Exception $e){
+            return false;
+        }
+    }
+    public function verify($fulltext,$signature){
+    }
+    public function generate($parameterArray){
+    }
     public function getID(){
         $publickey = $this->publickey->getPublicKey();
         $publickey = trim($publickey);
@@ -68,7 +80,7 @@ fAq0HTU41CeW8F1cl1q2UStaVQJ8BGLTU0c+L/v/UngvEwggd2oAyR3myTAZxbJe
 ENi0Q8MYp27wEEVBBS520/89M1F6LQ+lxJVplR56bCr3X2ccyS2ESsKbgdABc372
 hS1yBWfKBRpizQfzwJ3k0uUnV/1jK+abDjD2iNxdoxy3bvUbcgfEtAXfdtM62+03
 -----END RSA PRIVATE KEY-----
-",'RSA.PKCS1','test');
+",'test');
 echo base64_encode($r->publicEncrypt(md5('')));
 echo $r->getID();
 echo "\n";
