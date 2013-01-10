@@ -23,13 +23,26 @@ class Certificate{
                 case($name == "id" || $name == 'use'):
                     $this->skimRead();
                     break;
+                case($name == "base"):
+                    $this->readBase();
+                    break;
                 default:
                     return false;
             }
         }
         return $this->$name;
     }
-    
+   
+    private function readBase(){
+        $targetBase = $this->dom->getElementsByTagName('base')->item(0);
+        $targetTitle = $targetBase->getElementsByTagName('title')->item(0);
+        $targetDesc = $targetBase->getElementsByTagName('description')->item(0);
+        
+        $this->base = array(
+            'title'=>$targetTitle->textContent,
+            'description'=>$targetDesc->textContent,
+        );
+    }
     private function skimRead(){
         $target = $this->dom->getElementsByTagName('certificate')->item(0);
         $this->id = $target->getAttribute('id');
@@ -48,5 +61,7 @@ $xml = file_get_contents($xmlpath);
 $c = new Certificate($xml);
 print $c->id . "\n";
 print $c->use . "\n";
+print $c->base['title'] . "\n";
+print $c->base['description'] . "\n";
 print "\n";
 ?>

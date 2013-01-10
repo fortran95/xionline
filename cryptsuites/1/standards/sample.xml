@@ -2,7 +2,6 @@
     <base>
         <title>Title</title>
         <description>Some Description</description>
-        <contact type="a">a</contact>
     </base>
     <keys>
         <block id="49DEFF2E49DEFF2E49DEFF2E49DEFF2E" expire="2013-12-31T23:59:59Z" type="RSA">
