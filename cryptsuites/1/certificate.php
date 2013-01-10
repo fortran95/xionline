@@ -20,8 +20,8 @@ class Certificate{
     public function __get($name){
         if(!isset($this->$name)){  # parse certificate on demand
             switch($name){  # trigger parsing function
-                case "id":
-                    $this->readBaseInfo();
+                case($name == "id" || $name == 'use'):
+                    $this->skimRead();
                     break;
                 default:
                     return false;
@@ -29,15 +29,15 @@ class Certificate{
         }
         return $this->$name;
     }
-    public function __set($name,$value){
-        # each attribute can be set only once.
-        if(isset($this->$name))
-            return;
-        $this->$name = $value;
-    }
     
-    private function readBaseInfo(){
-        $this->id = 'hello';
+    private function skimRead(){
+        $target = $this->dom->getElementsByTagName('certificate')->item(0);
+        $this->id = $target->getAttribute('id');
+
+        if($target->hasAttribute('use'))
+            $this->use = $target->getAttribute('use');
+        else
+            $this->use = 'public';
     }
 }
 
@@ -46,7 +46,7 @@ $xmlpath = "$_cryptsuite_1_standard_path/sample.xml";
 $xml = file_get_contents($xmlpath);
 
 $c = new Certificate($xml);
-print $c->id;
-
+print $c->id . "\n";
+print $c->use . "\n";
 print "\n";
 ?>
