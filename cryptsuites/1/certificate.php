@@ -33,6 +33,20 @@ class Certificate{
          *      - How were they validated.
          */
     }
+    public function signCertificate($anotherCertificate,$sureofs,$grants){
+        /*
+         * Use this certificate -- must be private -- to sign
+         * another certificate. This is used confirming some parts.
+         *
+         * sureof(s) is an array containing which key block(s) are confirmed.
+         *  because new key blocks is allowed to be added into the certificate.
+         * grant(s) is an optional associative array leaving for statements
+         *  such as by this sign which priviledges are granted.
+         *
+         * XXX The return value should be a piece of XML that can be
+         *     transported, validated and imported into a certificate.
+         */
+    }
 
     public function __get($name){
         if(!isset($this->$name)){  # parse certificate on demand
