@@ -1,5 +1,8 @@
 <?
 class Certificate{
+
+    private $passphrase;
+
     public function __construct($certtext=''){
         global $_cryptsuite_1_standard_path;
         $this->standardsPath = $_cryptsuite_1_standard_path;
@@ -16,6 +19,9 @@ class Certificate{
             throw new CryptoException("given certificate invalid.");
         }
     }
+    public function setPassphrase($passphrase){
+        $this->passphrase = $passphrase;
+    }
 
     public function __get($name){
         if(!isset($this->$name)){  # parse certificate on demand
@@ -26,13 +32,19 @@ class Certificate{
                 case($name == "base"):
                     $this->readBase();
                     break;
+                case($name == "keys"):
+                    $this->readKeyBlocks();
+                    break;
                 default:
                     return false;
             }
         }
         return $this->$name;
     }
-   
+    
+    private function readKeyBlocks(){
+        
+    }
     private function readBase(){
         $targetBase = $this->dom->getElementsByTagName('base')->item(0);
         $targetTitle = $targetBase->getElementsByTagName('title')->item(0);
@@ -55,7 +67,7 @@ class Certificate{
 }
 
 # Test code
-$xmlpath = "$_cryptsuite_1_standard_path/sample.xml";
+$xmlpath = "$_cryptsuite_1_standard_path/sample.prv.xml";
 $xml = file_get_contents($xmlpath);
 
 $c = new Certificate($xml);
