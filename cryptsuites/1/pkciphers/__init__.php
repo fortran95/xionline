@@ -1,6 +1,6 @@
 <?
 Interface PublicKeyCipher{
-    public function __construct($datablock='',$passphrase);
+    public function __construct($datablock='',$passphrase='');
     public function publicEncrypt($plaintext);
     public function privateDecrypt($ciphertext);
     public function sign($fulltext);

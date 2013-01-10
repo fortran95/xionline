@@ -5,7 +5,7 @@
     <!-- publicKeyCipher: all supported public key ciphers. -->
     <xs:simpleType name="publicKeyCipher">
         <xs:restriction base="xs:string">
-            <xs:enumeration value="RSA.PKCS1"/> 
+            <xs:enumeration value="RSA"/> 
         </xs:restriction>
     </xs:simpleType>
 

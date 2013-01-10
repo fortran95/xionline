@@ -1,12 +1,12 @@
 <?
-register_pkcipher('RSA.PKCS1','PKC_RSA');
-register_pkcipher('RSA.OAEP','PKC_RSA');
+register_pkcipher('RSA','PKC_RSA');
 
 class PKC_RSA implements PublicKeyCipher{
     public function __construct($datablock='',$passphrase=''){
         if(is_string($datablock)){
             if(!is_string($passphrase))
                 throw CryptoException("passphrase expects a string.");
+
             if($passphrase){
                 # so the key block represents a private key.
                 # and we'll extract the public key first.
@@ -21,6 +21,7 @@ class PKC_RSA implements PublicKeyCipher{
                 $this->publickey = new Crypt_RSA();
                 $this->publickey->loadKey($datablock);
             }
+            $this->publickey->setPublicKey();
         }
     }
     public function publicEncrypt($plaintext){
@@ -37,10 +38,15 @@ class PKC_RSA implements PublicKeyCipher{
             return false;
         }
     }
-    public function sign($fulltext){}
+    public function sign($fulltext,$digestmod='sha1'){}
     public function verify($fulltext,$signature){}
     public function generate($parameterArray){}
-    public function getID(){}
+    public function getID(){
+        $publickey = $this->publickey->getPublicKey();
+        $publickey = trim($publickey);
+        $publickey = str_replace(array(' ',"\n"),'',$publickey);
+        return md5($publickey);
+    }
 }
 
 $r = new PKC_RSA("
@@ -62,6 +68,8 @@ fAq0HTU41CeW8F1cl1q2UStaVQJ8BGLTU0c+L/v/UngvEwggd2oAyR3myTAZxbJe
 ENi0Q8MYp27wEEVBBS520/89M1F6LQ+lxJVplR56bCr3X2ccyS2ESsKbgdABc372
 hS1yBWfKBRpizQfzwJ3k0uUnV/1jK+abDjD2iNxdoxy3bvUbcgfEtAXfdtM62+03
 -----END RSA PRIVATE KEY-----
-",'test');
-echo $r->privateDecrypt($r->publicEncrypt("hello\n"));
+",'RSA.PKCS1','test');
+echo base64_encode($r->publicEncrypt(md5('')));
+echo $r->getID();
+echo "\n";
 ?>
