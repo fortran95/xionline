@@ -1,25 +1,27 @@
 <?
-
 class Certificate{
     public function __construct($certtext=''){
         global $_cryptsuite_1_standard_path;
         $this->standardsPath = $_cryptsuite_1_standard_path;
-
         $this->certtext = $certtext;
+
+        if(!$certtext) return;
 
         try{
             $this->dom = new DOMDocument();
-            $this->loadXML($this->certtext);
-            if(!$xml->schemaValidate($this->standardsPath . '/certificate.xsd'))
+            $this->dom->loadXML($this->certtext);
+            if(!$this->dom->schemaValidate($this->standardsPath . '/certificate.xsd'))
                 throw new Exception();
         }catch(Exception $e){
             throw new CryptoException("given certificate invalid.");
         }
     }
+
     public function __get($name){
         if(!isset($this->$name)){  # parse certificate on demand
             switch($name){  # trigger parsing function
                 case "id":
+                    $this->readBaseInfo();
                     break;
                 default:
                     return false;
@@ -33,13 +35,18 @@ class Certificate{
             return;
         $this->$name = $value;
     }
-    private function parseCert(){
-        /*
-         * Parse $this->certtext and refresh all info
-         * stored in this class.
-         *
-         */
-#        require_once(
+    
+    private function readBaseInfo(){
+        $this->id = 'hello';
     }
 }
+
+# Test code
+$xmlpath = "$_cryptsuite_1_standard_path/sample.xml";
+$xml = file_get_contents($xmlpath);
+
+$c = new Certificate($xml);
+print $c->id;
+
+print "\n";
 ?>

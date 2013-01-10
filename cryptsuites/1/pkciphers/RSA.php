@@ -74,6 +74,9 @@ class PKC_RSA implements PublicKeyCipher{
     }
 }
 
+/*
+# Test Code
+
 $r = new PKC_RSA($keyblock = "
 -----BEGIN RSA PRIVATE KEY-----
 Proc-Type: 4,ENCRYPTED
@@ -98,4 +101,6 @@ hS1yBWfKBRpizQfzwJ3k0uUnV/1jK+abDjD2iNxdoxy3bvUbcgfEtAXfdtM62+03
 #echo $r->getID();
 if($r->verify($keyblock,$r->sign($keyblock))) print "Signature passed.";
 echo "\n";
+
+*/
 ?>

@@ -1,23 +1,23 @@
-<certificate id="00000000000000000000000000000000" use="public">
+<certificate id="0000000000000000000000000000000011111111" use="public">
     <base>
         <title>Title</title>
         <description>Some Description</description>
         <contact type="a">a</contact>
     </base>
     <keys>
-        <block id="49DEFF2E" expire="2013-12-31T23:59:59Z" type="RSA.PKCS1">
+        <block id="49DEFF2E49DEFF2E49DEFF2E49DEFF2E" expire="2013-12-31T23:59:59Z" type="RSA">
  VGhpcyBpcyBhIHNsaWdodCBsb25nIHNlbnRlbmNlIHdoaWNoIGlzIHNvIGxvbmcgdGhhdCBiYXNl 
  NjQgZW5jb2RpbmcgaXQgd2lsbCBsZWFkIGEgcHJvZHVjaW5nIG9mIG11bHRpcGxlIGxpbmVzLg== 
         </block>
     </keys>
     <signatures>
-        <signature expire="2013-12-31T00:00:00Z" from="101112131415161718191A1B1C1D1E1F">
+        <signature expire="2013-12-31T00:00:00Z" from="101112131415161718191A1B1C1D1E1F12345678">
             <contain>
-                <sure of="49DEFF2E"/>
+                <sure of="49DEFF2E49DEFF2E49DEFF2E49DEFF2E"/>
                 <grant name="Access.Dorm" value="1.601"/>
                 <grant name="Access.Laboratory" value="3"/>
             </contain>
-            <verify key="39DEFF2E" algo="SHA1">                
+            <verify key="39DEFF2E49DEFF2E49DEFF2E49DEFF2E" algo="SHA1">                
 VGhpcyBpcyBhIHNsaWdodCBsb25nIHNlbnRlbmNlIHdoaWNoIGlzIHNvIGxvbmcgdGhhdCBiYXNl 
             </verify>
         </signature>
