@@ -5,7 +5,7 @@ class PKC_RSA implements PublicKeyCipher{
     public function __construct($datablock='',$passphrase=''){
         if(is_string($datablock)){
             if(!is_string($passphrase))
-                throw CryptoException("passphrase expects a string.");
+                throw new CryptoException("passphrase expects a string.");
 
             if($passphrase){
                 # so the key block represents a private key.

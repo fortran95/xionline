@@ -56,10 +56,10 @@ class KeyBlock{
          */
         foreach(array('type','passphrase','data') as $index)
             if(!isset($data[$index]))
-                throw CryptoException("Key [$index] not specified when initializing this class.");
+                throw new CryptoException("Key [$index] not specified when initializing this class.");
 
         if(!isset($this->_ciphers[$data['type']]))
-            throw CryptoException("Key [type]({$data['type']}) not supported.");
+            throw new CryptoException("Key [type]({$data['type']}) not supported.");
 
         $this->keytype = $data['type'];
         $this->keypassphrase = isset($data['passphrase'])?$data['passphrase']:'';
