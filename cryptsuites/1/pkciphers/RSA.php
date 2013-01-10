@@ -41,15 +41,28 @@ class PKC_RSA implements PublicKeyCipher{
     public function sign($fulltext,$digestmod='sha1'){
         try{
             $digest = sha1($fulltext);
+
             $signature = $this->privatekey->sign($digest);
-            $return = new cipherText($signature);
+
+            $return = new cipherText($signature,True);
             $return->digest = $digestmod;
-            return $return;
+
+            return sprintf("%s",$return);
         }catch(Exception $e){
             return false;
         }
     }
     public function verify($fulltext,$signature){
+        try{
+            $signature = new cipherText($signature,False);
+            $digestmod = $signature->digest;
+            
+            $digest = sha1($fulltext);
+
+            return $this->publickey->verify($digest,sprintf("%s",$signature));
+        }catch(Exception $e){
+            return false;
+        }
     }
     public function generate($parameterArray){
     }
@@ -61,7 +74,7 @@ class PKC_RSA implements PublicKeyCipher{
     }
 }
 
-$r = new PKC_RSA("
+$r = new PKC_RSA($keyblock = "
 -----BEGIN RSA PRIVATE KEY-----
 Proc-Type: 4,ENCRYPTED
 DEK-Info: AES-128-CBC,43A4DA3B781FA6C07EC3997F40ACB986
@@ -81,7 +94,8 @@ ENi0Q8MYp27wEEVBBS520/89M1F6LQ+lxJVplR56bCr3X2ccyS2ESsKbgdABc372
 hS1yBWfKBRpizQfzwJ3k0uUnV/1jK+abDjD2iNxdoxy3bvUbcgfEtAXfdtM62+03
 -----END RSA PRIVATE KEY-----
 ",'test');
-echo base64_encode($r->publicEncrypt(md5('')));
-echo $r->getID();
+#echo base64_encode($r->publicEncrypt(md5('')));
+#echo $r->getID();
+if($r->verify($keyblock,$r->sign($keyblock))) print "Signature passed.";
 echo "\n";
 ?>
