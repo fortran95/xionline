@@ -2,17 +2,11 @@
 class cipherText{
     /*
      * cipherText: capsule ciphertext and flags
-     * 
-     * feeding this instance when initializing,
-     * and it will automatically decide if the feed
-     * is a previous cipherText->__toString()
-     * result, or new.
-     *
      */
     function __construct($text,$encode=False){
         if(!$encode){
             try{
-                $json = json_decode($text);
+                $json = json_decode(gzuncompress(base64_decode($text)));
                 if($json && array_key_exists('t',$json) && array_key_exists('d',$json)){
                     $this->_text = $json->t;
                     $this->_data = array();
@@ -47,8 +41,10 @@ class cipherText{
     }
     function __toString(){
         if($this->_encode)
-            return json_encode(array('t'=>base64_encode($this->_text),
-                                     'd'=>$this->_data,));
+            return  base64_encode(gzcompress(json_encode(
+                        array('t'=>base64_encode($this->_text),
+                              'd'=>$this->_data,)
+                    )));
         else
             return base64_decode($this->_text);
     }
