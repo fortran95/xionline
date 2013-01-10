@@ -22,6 +22,17 @@ class Certificate{
     public function setPassphrase($passphrase){
         $this->passphrase = $passphrase;
     }
+    public function validateCertificate($anotherCertificate){
+        /*
+         * This is used validating another certificate.
+         * In the other certificate, signatures from this certificate
+         * is found and validated.
+         *
+         * XXX The return value might be complex:
+         *      - How many signatures from this certificate found.
+         *      - How were they validated.
+         */
+    }
 
     public function __get($name){
         if(!isset($this->$name)){  # parse certificate on demand
@@ -43,7 +54,15 @@ class Certificate{
     }
     
     private function readKeyBlocks(){
-        
+        $target = $this->dom->getElementsByTagName('keys')->item(0);
+        $targets = $target->getElementsByTagName('block');
+        foreach($targets as $target){
+            try{
+                # TODO read key block
+            }catch(Exception $e){
+                throw new CryptoException('error reading key blocks.');
+            }
+        }
     }
     private function readBase(){
         $targetBase = $this->dom->getElementsByTagName('base')->item(0);
