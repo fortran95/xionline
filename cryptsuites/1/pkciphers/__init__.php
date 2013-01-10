@@ -1,11 +1,11 @@
 <?
 Interface PublicKeyCipher{
-    public function __construct($load=false,$datablock='',$public=false);
+    public function __construct($datablock='',$passphrase);
     public function publicEncrypt($plaintext);
-    public function privateDecrypt($ciphertext,$passphrase);
-    public function sign($fulltext,$passphrase);
+    public function privateDecrypt($ciphertext);
+    public function sign($fulltext);
     public function verify($fulltext,$signature);
-    public function generate($parameterArray,$passphrase);
+    public function generate($parameterArray);
     public function getID();
 }
 

@@ -21,6 +21,12 @@ class KeyBlock{
         $this->readData($data);
     }
     public function publicEncrypt($data){
+        try{
+            return $this->key->publicEncrypt($data);
+        }catch(Exception $e){
+            
+        }
+        return false;
     }
     public function privateDecrypt($data,$passphrase){
     }
@@ -28,8 +34,9 @@ class KeyBlock{
     }
     public function verify($source,$data){
     }
-    private function deriveKeyBlockID($expire){
-        
+    private function deriveKeyBlockID($holderID,$expire){
+        $keyID = $this->key->getID();
+        $regulatedExpireTime = str(new timeRegulator($expire));
     }
     private function readData($data){
         foreach(array('type','use','data') as $index)
@@ -46,6 +53,7 @@ class KeyBlock{
         $this->keyuse = ($data['use'] == 'public');
         $this->keydata  = $data['data'];
 
+        $this->key = (new $this->_ciphers[$data['type']](true,$this->keydata,$this->keyuse));
     }
 }
 ?>
