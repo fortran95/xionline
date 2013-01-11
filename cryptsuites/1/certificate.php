@@ -33,7 +33,7 @@ class Certificate{
          *      - How were they validated.
          */
     }
-    public function signCertificate($anotherCertificate,$sureofs,$grants){
+    public function signCertificate($anotherCertificate,$keyid,$sureofs,$grants){
         /*
          * Use this certificate -- must be private -- to sign
          * another certificate. This is used confirming some parts.
@@ -46,6 +46,8 @@ class Certificate{
          * XXX The return value should be a piece of XML that can be
          *     transported, validated and imported into a certificate.
          */
+         if($this->use == 'public')
+            throw new CryptoException('trying to sign using a public certificate.');
     }
 
     public function __get($name){
@@ -74,7 +76,7 @@ class Certificate{
         foreach($targets as $target){
             try{
                 if($this->use == 'private' && !$this->passphrase)
-                    throw new CryptoException('trying to read a private certificate without passphrase.')
+                    throw new CryptoException('trying to read a private certificate without passphrase.');
                 foreach($targets as $block){
                     $feed = array(
                         'type'=>$block->getAttribute('type'),
@@ -102,7 +104,8 @@ class Certificate{
             'description'=>$targetDesc->textContent,
         );
 
-        $this->_holderID = (new objectHash($this->base))->md5();
+        $holderIDHasher = new objectHash($this->base);
+        $this->_holderID = $holderIDHasher->md5();
     }
     private function skimRead(){
         $target = $this->dom->getElementsByTagName('certificate')->item(0);

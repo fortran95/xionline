@@ -40,7 +40,9 @@ class PKC_RSA implements PublicKeyCipher{
     }
     public function sign($fulltext,$digestmod='sha1'){
         try{
-            $digest = sha1($fulltext);
+            $digestor = new objectHash($fulltext);
+
+            $digest = $digestor->sha1(True);
 
             $signature = $this->privatekey->sign($digest);
 
@@ -57,11 +59,12 @@ class PKC_RSA implements PublicKeyCipher{
             $signature = new cipherText($signature,False);
             $digestmod = $signature->digest;
             
-            $digest = sha1($fulltext);
+            $digestor = new objectHash($fulltext);
+            $digest = $digestor->sha1(True);
 
             return $this->publickey->verify($digest,sprintf("%s",$signature));
         }catch(Exception $e){
-            return false;
+            return False;
         }
     }
     public function generate($parameterArray){
@@ -70,7 +73,9 @@ class PKC_RSA implements PublicKeyCipher{
         $publickey = $this->publickey->getPublicKey();
         $publickey = trim($publickey);
         $publickey = str_replace(array(' ',"\n"),'',$publickey);
-        return md5($publickey);
+
+        $digestor = new objectHash($publickey);
+        return $digestor->md5(False);
     }
 }
 
