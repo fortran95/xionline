@@ -105,7 +105,7 @@ class Certificate{
         );
 
         $holderIDHasher = new objectHash($this->base);
-        $this->_holderID = $holderIDHasher->md5();
+        $this->_holderID = $holderIDHasher->md5(False);
     }
     private function skimRead(){
         $target = $this->dom->getElementsByTagName('certificate')->item(0);
