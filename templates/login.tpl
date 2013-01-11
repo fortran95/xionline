@@ -1,14 +1,5 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-<title>Sandy - 身份认证</title>
-<meta charset="UTF-8" />
-<link rel="stylesheet" type="text/css" href="static/css/reset.css">
-<link rel="stylesheet" type="text/css" href="static/css/structure.css">
-<script src="static/js/common.js"></script>
-</head>
+{include file="overall.header.tpl" title="登录"}
 
-<body>
 {if isset($success)}
 <div class="box loginmessage">
 <strong>{$success}</strong> 已经登录成功。
@@ -32,5 +23,5 @@
 	</footer>
 </form>
 {/if}
-</body>
-</html>
+
+{include file="overall.footer.tpl"}
