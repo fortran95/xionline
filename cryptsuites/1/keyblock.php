@@ -2,6 +2,8 @@
 class KeyBlock{
     private $canEncrypt = False;
     private $canSign = False;
+    private $canVerifySign = False;
+    private $canDecrypt = False;
 
     public function __construct($data=false){
         /*
@@ -23,12 +25,11 @@ class KeyBlock{
 
         $this->readData($data);
     }
-    public function canSign(){
-        return $this->canSign;
-    }
-    public function canEncrypt(){
-        return $this->canEncrypt;
-    }
+    public function canSign(){return $this->canSign;}
+    public function canEncrypt(){return $this->canEncrypt;}
+    public function canDecrypt(){return $this->canDecrypt;}
+    public function canVerifySign(){return $this->canVerifySign;}
+
     public function publicEncrypt($data){
         try{
             return $this->key->publicEncrypt($data);
@@ -91,6 +92,13 @@ class KeyBlock{
         $this->keyExpire = isset($data['expire'])?$data['expire']:-1;
 
         $this->key = new $this->_ciphers[$this->keyType]($this->keyData,$this->keyPassPhrase);
+
+        /* Modify Permissions State */
+        $keyExpired = False; # FIXME
+        $this->canEncrypt = $this->key->isInitialized() && $this->key->canEncrypt() && $keyExpired;
+        $this->canDecrypt = $this->key->isInitialized() && $this->key->canDecrypt();
+        $this->canSign = $this->key->isInitialized() && $this->key->canSign() && $keyExpired;
+        $this->canVerifySign = $this->key->isInitialized() && $this->key->canVerifySign();
     }
 }
 ?>

@@ -1,7 +1,7 @@
-<certificate id="0000000000000000000000000000000011111111" use="public">
+<certificate id="FBA5FA8CF0025383997E52BE145C412CA9674EB5" use="public">
     <base>
         <title>Title</title>
-        <description>Some Description</description>
+        <description></description>
     </base>
     <keys>
         <block id="49DEFF2E49DEFF2E49DEFF2E49DEFF2E" type="RSA">

@@ -2,6 +2,14 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            elementFormDefault="qualified">
 
+    <!--descriptiveString: For writing title and description. -->
+    <xs:simpleType name="descriptiveString">
+        <xs:restriction base="xs:normalizedString">
+            <xs:pattern value="[0-9A-Za-z .,]*"/>
+            <xs:whiteSpace value="collapse"/>
+        </xs:restriction>
+    </xs:simpleType>
+
     <!-- publicKeyCipher: all supported public key ciphers. -->
     <xs:simpleType name="publicKeyCipher">
         <xs:restriction base="xs:string">
@@ -51,7 +59,7 @@
 
             <!-- title: a brief name for this certificate. -->
             <xs:element name="title" ><xs:simpleType>
-                <xs:restriction base="xs:string">
+                <xs:restriction base="descriptiveString">
                     <xs:minLength value="5"/>
                     <xs:maxLength value="50"/>
                 </xs:restriction>
@@ -59,7 +67,7 @@
 
             <!-- description: some space leaving for descriptions. -->
             <xs:element name="description"><xs:simpleType>
-                <xs:restriction base="xs:string">
+                <xs:restriction base="descriptiveString">
                     <xs:maxLength value="300"/>
                 </xs:restriction>
             </xs:simpleType></xs:element>

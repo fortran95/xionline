@@ -25,7 +25,7 @@ class Certificate{
     public function verifyRestrictions(){
         /*
          * There are some restrictions on certificate:
-         *  - First 32 bytes in HEX formatted Certificate ID
+         *  - Leading bytes in HEX formatted Certificate ID
          *    must equal the hash result of section <base>.
          *  - Each key block's id must equal to the hash result of
          *    a combination of block data, expire time and certificateID.
@@ -93,15 +93,15 @@ class Certificate{
     }
     
     private function readKeyBlocks(){
+        if($this->use == 'private' && !$this->passphrase)
+            throw new CryptoException('trying to read a private certificate without passphrase.');
+
         $target = $this->dom->getElementsByTagName('keys')->item(0);
         $targets = $target->getElementsByTagName('block');
         $this->keys = array();
         foreach($targets as $target){
             try{
-                if($this->use == 'private' && !$this->passphrase)
-                    throw new CryptoException('trying to read a private certificate without passphrase.');
                 foreach($targets as $block){
-
                     $feed = array(
                         'type'=>$block->getAttribute('type'),
                         'passphrase'=>($this->use == 'public')?'':$this->passphrase,
@@ -127,12 +127,12 @@ class Certificate{
         $targetDesc = $targetBase->getElementsByTagName('description')->item(0);
         
         $this->base = array(
-            'title'=>$targetTitle->textContent,
-            'description'=>$targetDesc->textContent,
+            'title'=>trim($targetTitle->textContent),
+            'description'=>trim($targetDesc->textContent),
         );
 
         $holderIDHasher = new objectHash($this->base);
-        $this->baseHash = $holderIDHasher->md5(False);
+        $this->baseHash = $holderIDHasher->sha1(False);
     }
     private function skimRead(){
         $target = $this->dom->getElementsByTagName('certificate')->item(0);
@@ -155,6 +155,7 @@ print $c->id . "\n";
 print $c->use . "\n";
 print $c->base['title'] . "\n";
 print $c->base['description'] . "\n";
+print $c->baseHash . "\n";
 print_r(array_keys($c->keys));
 print "\n";
 ?>

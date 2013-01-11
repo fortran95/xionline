@@ -1,9 +1,13 @@
 <?
 class timeRegulator{
-    function __construct($timestr){
+    public function __construct($timestr){
+        $this->reptime = $this->convert($timestr);
     }
-    function __toString(){
-
+    public function __toString(){
+        return "{$this->reptime}";
+    }
+    private function convert($timestr){
+        return strtotime($timestr);
     }
 }
 ?>
