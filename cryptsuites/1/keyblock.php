@@ -44,7 +44,7 @@ class KeyBlock{
         }catch(Exception $e){}
         return false;
     }
-    public function deriveKeyBlockID($holderID){
+    public function deriveKeyBlockID($certificateID){
         $keyID = $this->key->getID();
 
         if($this->keyExpire > 0){
@@ -57,7 +57,7 @@ class KeyBlock{
         $digestor = new objectHash(
                         array('id'=>$keyID,
                               'expire'=>$keyExpire,
-                              'holder'=>$holderID,
+                              'certificate'=>$certificateID,
                              )
                                   );
 

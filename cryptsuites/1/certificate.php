@@ -22,6 +22,24 @@ class Certificate{
     public function setPassphrase($passphrase){
         $this->passphrase = $passphrase;
     }
+    public function verifyRestrictions(){
+        /*
+         * There are some restrictions on certificate:
+         *  - First 32 bytes in HEX formatted Certificate ID
+         *    must equal the hash result of section <base>.
+         *  - Each key block's id must equal to the hash result of
+         *    a combination of block data, expire time and certificateID.
+         * And this function verifies these restrictions.
+         */
+        if(substr($this->id,0,strlen($this->baseHash)) != $this->baseHash)
+            return False;
+
+        foreach($this->keys as $keyID=>$keyBlock){
+            if($keyBlock->deriveKeyBlockID($this->id) != $keyID)
+                return False;
+        }
+        return True;
+    }
     public function validateCertificate($anotherCertificate){
         /*
          * This is used validating another certificate.
@@ -46,8 +64,13 @@ class Certificate{
          * XXX The return value should be a piece of XML that can be
          *     transported, validated and imported into a certificate.
          */
-         if($this->use == 'public')
+        if($this->use == 'public')
             throw new CryptoException('trying to sign using a public certificate.');
+        if(!$this->verifyRestrictions())
+            throw new CryptoException('trying to sign using an invalid certificate.');
+
+        if(!$anotherCertificate->verifyRestrictions())
+            throw new CryptoException('trying to sign an invalid certificate.');
     }
 
     public function __get($name){
@@ -83,9 +106,11 @@ class Certificate{
                         'passphrase'=>($this->use == 'public')?'':$this->passphrase,
                         'data'=>$block->textContent,
                     );
+                    if($block->hasAttribute('expire'))
+                        $feed['expire'] = $block->getAttribute('expire');
                     try{
                         $key = new KeyBlock($feed);
-                        $this->keys[$key->deriveKeyBlockID($this->_holderID)] = $key;
+                        $this->keys[$block->getAttribute('id')] = $key;
                     }catch(Exception $e){
                     }
                 }
@@ -105,7 +130,7 @@ class Certificate{
         );
 
         $holderIDHasher = new objectHash($this->base);
-        $this->_holderID = $holderIDHasher->md5(False);
+        $this->baseHash = $holderIDHasher->md5(False);
     }
     private function skimRead(){
         $target = $this->dom->getElementsByTagName('certificate')->item(0);
@@ -128,7 +153,6 @@ print $c->id . "\n";
 print $c->use . "\n";
 print $c->base['title'] . "\n";
 print $c->base['description'] . "\n";
-print $c->_holderID . "\n";
 print_r(array_keys($c->keys));
 print "\n";
 ?>
