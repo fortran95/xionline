@@ -44,9 +44,9 @@ class KeyBlock{
         }catch(Exception $e){}
         return false;
     }
-    private function deriveKeyBlockID($holderID,$expire){
+    public function deriveKeyBlockID($holderID){
         $keyID = $this->key->getID();
-        $regulatedExpireTime = str(new timeRegulator($expire));
+        $regulatedExpireTime = str(new timeRegulator($this->keyexpire));
     }
     private function readData($data){
         /*
@@ -64,6 +64,7 @@ class KeyBlock{
         $this->keytype = $data['type'];
         $this->keypassphrase = isset($data['passphrase'])?$data['passphrase']:'';
         $this->keydata  = $data['data'];
+        $this->keyexpire = $data['expire'];
 
         $this->key = (new $this->_ciphers[$data['type']]($this->keydata,$this->passphrase));
     }

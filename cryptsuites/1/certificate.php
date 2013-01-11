@@ -1,7 +1,7 @@
 <?
 class Certificate{
 
-    private $passphrase;
+    private $passphrase = false;
 
     public function __construct($certtext=''){
         global $_cryptsuite_1_standard_path;
@@ -54,7 +54,7 @@ class Certificate{
                 case($name == "id" || $name == 'use'):
                     $this->skimRead();
                     break;
-                case($name == "base"):
+                case($name == "base" || $name == '_holderID'):
                     $this->readBase();
                     break;
                 case($name == "keys"):
@@ -70,9 +70,23 @@ class Certificate{
     private function readKeyBlocks(){
         $target = $this->dom->getElementsByTagName('keys')->item(0);
         $targets = $target->getElementsByTagName('block');
+        $this->keys = array();
         foreach($targets as $target){
             try{
-                # TODO read key block
+                if($this->use == 'private' && !$this->passphrase)
+                    throw new CryptoException('trying to read a private certificate without passphrase.')
+                foreach($targets as $block){
+                    $feed = array(
+                        'type'=>$block->getAttribute('type'),
+                        'passphrase'=>($this->use == 'public')?'':$this->passphrase,
+                        'data'=>$block->textContent,
+                    );
+                    try{
+                        $key = new KeyBlock($feed);
+                        $this->keys[$key->deriveKeyBlockID($this->_holderID)] = $key;
+                    }catch(Exception $e){
+                    }
+                }
             }catch(Exception $e){
                 throw new CryptoException('error reading key blocks.');
             }
@@ -87,6 +101,8 @@ class Certificate{
             'title'=>$targetTitle->textContent,
             'description'=>$targetDesc->textContent,
         );
+
+        $this->_holderID = (new objectHash($this->base))->md5();
     }
     private function skimRead(){
         $target = $this->dom->getElementsByTagName('certificate')->item(0);
@@ -96,6 +112,7 @@ class Certificate{
             $this->use = $target->getAttribute('use');
         else
             $this->use = 'public';
+
     }
 }
 

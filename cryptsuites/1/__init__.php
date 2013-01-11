@@ -4,6 +4,7 @@ $_cryptsuite_1_standard_path = "$_cryptsuite_1_basepath/standards";
 
 include("$_cryptsuite_1_basepath/class/exceptions.php");
 include("$_cryptsuite_1_basepath/class/ciphertext.php");
+include("$_cryptsuite_1_basepath/class/objecthash.php");
 
 include("$_cryptsuite_1_basepath/libsecurity/Crypt/RSA.php");
 
