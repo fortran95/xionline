@@ -1,5 +1,8 @@
 <?
 class KeyBlock{
+    private $canEncrypt = False;
+    private $canSign = False;
+
     public function __construct($data=false){
         /*
          * class KeyBlock
@@ -19,6 +22,12 @@ class KeyBlock{
             return;
 
         $this->readData($data);
+    }
+    public function canSign(){
+        return $this->canSign;
+    }
+    public function canEncrypt(){
+        return $this->canEncrypt;
     }
     public function publicEncrypt($data){
         try{

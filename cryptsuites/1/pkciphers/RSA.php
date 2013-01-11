@@ -2,6 +2,13 @@
 register_pkcipher('RSA','PKC_RSA');
 
 class PKC_RSA implements PublicKeyCipher{
+    
+    private $isInitialized = False;
+    private $canSign = False;
+    private $canVerifySign = False;
+    private $canEncrypt = False;
+    private $canDecrypt = False;
+
     public function __construct($datablock='',$passphrase=''){
         if(is_string($datablock)){
             if(!is_string($passphrase))
@@ -13,13 +20,20 @@ class PKC_RSA implements PublicKeyCipher{
                 # NOTICE: private key without a passphrase is not accepted.
                 $this->privatekey = new Crypt_RSA();
                 $this->privatekey->setPassword($passphrase);
-                $this->privatekey->loadKey($datablock);
+                $loadResult1 = $this->privatekey->loadKey($datablock);
 
                 $this->publickey = new Crypt_RSA();
-                $this->publickey->loadKey($this->privatekey->getPublicKey());
+                $loadResult2 = $this->publickey->loadKey($this->privatekey->getPublicKey());
+
+                $this->isInitialized = $loadResult1 && $loadResult2;
+                $this->canSign = $this->canDecrypt = $loadResult1;
+                $this->canEncrypt = $this->canVerifySign = $loadResult2;
             } else {
                 $this->publickey = new Crypt_RSA();
-                $this->publickey->loadKey($datablock);
+                $loadResult = $this->publickey->loadKey($datablock);
+                
+                $this->canSign = $this->canDecrypt = False;
+                $this->canEncrypt = $this->canVerifySign = $this->isInitialized = $loadResult;
             }
             $this->publickey->setPublicKey();
         }
@@ -77,6 +91,11 @@ class PKC_RSA implements PublicKeyCipher{
         $digestor = new objectHash($publickey);
         return $digestor->md5(False);
     }
+    public function canSign(){return $this->canSign;}
+    public function canEncrypt(){return $this->canEncrypt;}
+    public function canDecrypt(){return $this->canDecrypt;}
+    public function canVerifySign(){return $this->canVerifySign;}
+    public function isInitialized(){return $this->isInitialized;}
 }
 
 /*

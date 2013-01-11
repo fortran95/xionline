@@ -6,7 +6,13 @@ Interface PublicKeyCipher{
     public function sign($fulltext);
     public function verify($fulltext,$signature);
     public function generate($parameterArray);
+
     public function getID();
+    public function canSign();
+    public function canEncrypt();
+    public function canVerifySign();
+    public function canDecrypt();
+    public function isInitialized();
 }
 
 $cryptsuite_pkciphers_supported = array();

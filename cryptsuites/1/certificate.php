@@ -101,6 +101,7 @@ class Certificate{
                 if($this->use == 'private' && !$this->passphrase)
                     throw new CryptoException('trying to read a private certificate without passphrase.');
                 foreach($targets as $block){
+
                     $feed = array(
                         'type'=>$block->getAttribute('type'),
                         'passphrase'=>($this->use == 'public')?'':$this->passphrase,
@@ -108,6 +109,7 @@ class Certificate{
                     );
                     if($block->hasAttribute('expire'))
                         $feed['expire'] = $block->getAttribute('expire');
+
                     try{
                         $key = new KeyBlock($feed);
                         $this->keys[$block->getAttribute('id')] = $key;
