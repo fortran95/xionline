@@ -36,17 +36,16 @@ class objectHash{
             return $mixedObj?'TRUE':'FALSE';
 
         if(is_array($mixedObj)){
-            $result = '';
-            if((bool)count(array_filter(array_keys($mixedObj), 'is_string'))){
-                ksort($mixedObj);
-                foreach($mixedObj as $key=>$value)
-                    $result .= "::$key:$value";
-            } else {
-                sort($mixedObj);
-                foreach($mixedObj as $value)
-                    $result .= "::$value";
+            $result = array();
+            foreach($mixedObj as $key=>$value){
+                $hashValue = $this->prepare($value);
+                if(is_string($key))
+                    $result[] = hash_hmac('sha1',$hashValue,$key,False);
+                else
+                    $result[] = sha1($hashValue);
             }
-            return '(' . trim($result) . ')'; 
+            sort($result);
+            return implode('',$result);
         }
 
         throw new CryptoException('trying to hash unrecognized type.');
