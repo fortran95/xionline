@@ -146,6 +146,7 @@ class Certificate{
     }
 }
 
+/*
 # Test code
 $xmlpath = "$_cryptsuite_1_standard_path/sample.prv.xml";
 $xml = file_get_contents($xmlpath);
@@ -158,4 +159,5 @@ print $c->base['description'] . "\n";
 print $c->baseHash . "\n";
 print_r(array_keys($c->keys));
 print "\n";
+*/
 ?>

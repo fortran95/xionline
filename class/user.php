@@ -18,8 +18,14 @@ class User{
             return false;
         
         $returnValue = array();
-        foreach($userq as $cert)
-            $returnValue[] = (new Certificate($userq['content'])); 
+        foreach($userq as $cert){
+            try{
+                $c = new Certificate($userq['content'];
+            }catch(Exception $e){
+                continue;
+            }
+            $returnValue[] = $c;
+        }
         
         return $returnValue;
     }
