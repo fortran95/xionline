@@ -8,10 +8,16 @@ class objectHash{
         $this->source = $this->prepare($mixedObj); 
     }
     public function md5($raw=False){
-        return md5($this->source,$raw);
+        if($raw===True)
+            return md5($this->source,True);
+        else
+            return strtoupper(md5($this->source,False));
     }
     public function sha1($raw=False){
-        return sha1($this->source,$raw);
+        if($raw===True)
+            return sha1($this->source,$raw);
+        else
+            return strtoupper(sha1($this->source,False));
     }
 
     private function prepare($mixedObj){

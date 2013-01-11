@@ -46,7 +46,16 @@ class KeyBlock{
     }
     public function deriveKeyBlockID($holderID){
         $keyID = $this->key->getID();
-        $regulatedExpireTime = str(new timeRegulator($this->keyexpire));
+        $timeRegulator = new timeRegulator($this->keyexpire);
+        
+        $digestor = new objectHash(
+                        array('id'=>$keyID,
+                              'expire'=>sprintf("%s",$timeRegulator),
+                              'holder'=>$holderID,
+                             )
+                                  );
+
+        return $digestor->md5(False);
     }
     private function readData($data){
         /*

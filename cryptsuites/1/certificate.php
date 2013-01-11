@@ -128,5 +128,6 @@ print $c->id . "\n";
 print $c->use . "\n";
 print $c->base['title'] . "\n";
 print $c->base['description'] . "\n";
+print $c->_holderID . "\n";
 print "\n";
 ?>
