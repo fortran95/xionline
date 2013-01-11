@@ -4,7 +4,7 @@
         <description>Some Description</description>
     </base>
     <keys>
-        <block id="49DEFF2E49DEFF2E49DEFF2E49DEFF2E" expire="2013-12-31T23:59:59Z" type="RSA">
+        <block id="49DEFF2E49DEFF2E49DEFF2E49DEFF2E" type="RSA">
 -----BEGIN RSA PRIVATE KEY-----
 Proc-Type: 4,ENCRYPTED
 DEK-Info: AES-128-CBC,43A4DA3B781FA6C07EC3997F40ACB986

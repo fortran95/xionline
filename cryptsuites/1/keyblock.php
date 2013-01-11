@@ -46,11 +46,17 @@ class KeyBlock{
     }
     public function deriveKeyBlockID($holderID){
         $keyID = $this->key->getID();
-        $timeRegulator = new timeRegulator($this->keyexpire);
+
+        if($this->keyExpire > 0){
+            $timeRegulator = new timeRegulator($this->keyExpire);
+            $keyExpire = sprintf("%s",$timeRegulator);
+        } else {
+            $keyExpire = 'NEVER';
+        }
         
         $digestor = new objectHash(
                         array('id'=>$keyID,
-                              'expire'=>sprintf("%s",$timeRegulator),
+                              'expire'=>$keyExpire,
                               'holder'=>$holderID,
                              )
                                   );
@@ -70,12 +76,12 @@ class KeyBlock{
         if(!isset($this->_ciphers[$data['type']]))
             throw new CryptoException("Key [type]({$data['type']}) not supported.");
 
-        $this->keytype = $data['type'];
-        $this->keypassphrase = isset($data['passphrase'])?$data['passphrase']:'';
-        $this->keydata  = $data['data'];
-        $this->keyexpire = $data['expire'];
+        $this->keyType = $data['type'];
+        $this->keyPassPhrase = isset($data['passphrase'])?$data['passphrase']:'';
+        $this->keyData  = $data['data'];
+        $this->keyExpire = isset($data['expire'])?$data['expire']:-1;
 
-        $this->key = (new $this->_ciphers[$data['type']]($this->keydata,$this->passphrase));
+        $this->key = new $this->_ciphers[$this->keyType]($this->keyData,$this->keyPassPhrase);
     }
 }
 ?>

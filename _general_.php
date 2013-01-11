@@ -41,8 +41,9 @@ switch($_database_credentials['type']){
 
 include("$basepath/lib/security.php");
 include("$basepath/class/usermanager.php");
-include("$basepath/class/certificate.php");
 include("$basepath/class/time.php");
+
+include("$basepath/cryptsuites/1/__init__.php");
 include("$basepath/lib/smarty.php");
 
 $render = new Render();

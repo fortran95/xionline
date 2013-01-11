@@ -129,5 +129,6 @@ print $c->use . "\n";
 print $c->base['title'] . "\n";
 print $c->base['description'] . "\n";
 print $c->_holderID . "\n";
+print_r(array_keys($c->keys));
 print "\n";
 ?>
