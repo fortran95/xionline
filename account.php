@@ -8,7 +8,7 @@ switch($action){
     case 'login':
         $username = isset($_POST['username'])?$_POST['username']:'';
         $password = isset($_POST['password'])?$_POST['password']:'';
-        $um = new UserManager();
+        $um = new userManager();
         $ret = $um->authenticate($username,$password);
         if(false !== $ret){
             $_SESSION['user'] = $ret;
@@ -25,7 +25,7 @@ switch($action){
         if($password != $password2)
             $render->assign('error',-3);
         else {
-            $um = new UserManager();
+            $um = new userManager();
             $ret = $um->userNew($username,$password);
             if(true === $ret){
                 $render->assign('success','1');

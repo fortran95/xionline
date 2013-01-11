@@ -1,5 +1,5 @@
 <?
-class UserManager{
+class userManager{
     public function __construct(){
         global $database;
         $this->db = $database;
@@ -17,7 +17,7 @@ class UserManager{
         if($user['passhash'] != hash_hmac('sha1',$password,$user['hmackey']))
             return false;
 
-        return new User($user['id'],
+        return new user($user['id'],
                         $this->decodeUsername($user['username']),
                         $password);
     }
