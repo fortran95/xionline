@@ -2,9 +2,9 @@
 #error_reporting(0);
 
 $xml = new DOMDocument(); 
-$xml->load('./sample.xml');
+$xml->load('./sample.rev.xml');
 
-if (!$xml->schemaValidate('./signature.xsd')) { 
+if (!$xml->schemaValidate('./revocation.xsd')) { 
    echo "invalid";
 } 
 else { 

@@ -1,0 +1,8 @@
+<revocation from="101112131415161718191A1B1C1D1E1F12345678">
+    <targets>
+        <against id="49DEFF2E49DEFF2E49DEFF2E49DEFF2E"/>
+    </targets>
+    <verify key="39DEFF2E49DEFF2E49DEFF2E49DEFF2E" algo="SHA1">                
+VGhpcyBpcyBhIHNsaWdodCBsb25nIHNlbnRlbmNlIHdoaWNoIGlzIHNvIGxvbmcgdGhhdCBiYXNl 
+    </verify>
+</revocation>
