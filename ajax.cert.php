@@ -5,9 +5,9 @@ function analyzeCertificate($xml){
         $ret = array(
             'id'=>$c->id,
         );
-        return $ret;
+        return new success($ret);
     }catch(Exception $e){
-        return $e;
+        return new failure($e);
     }
 }
 
@@ -21,23 +21,25 @@ $certManager = new certManager($u);
 
 $action = isset($_GET['action'])?trim($_GET['action']):'listAllKeys';
 
-$response = array();
 switch($action){
     case 'listAllKeys':
         /* List all keys using Certificate Manager.
            Return an array of brief information. */
+        $response = array();
         foreach($certManager->certificates as $cert)
             $response[] = array(
                 'id'=>$c->id,
             );
+        $response = new success($response);
         break;
     case 'analyzeCertificate':
         /* Read in $_POST['certificate'] or from database, analyze
            so that user is aware of some information. */
         $xml = $_POST['certificate'];
+        $response = analyzeCertificate($xml);
         break;
     default:
         exit;
 }
-die(json_encode($response));
+die($response->getJSON());
 ?>

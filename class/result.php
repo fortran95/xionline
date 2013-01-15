@@ -26,8 +26,8 @@ class success extends result{
         $this->content = $mixed;
     }
 }
-class error{
-    protected $type = 'error';
+class failure extends result{
+    protected $type = 'failure';
 
     public function __construct($mixed){
         $this->content = $mixed;

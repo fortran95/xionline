@@ -43,6 +43,7 @@ include("$basepath/lib/security.php");
 include("$basepath/class/usermanager.php");
 include("$basepath/class/certmanager.php");
 include("$basepath/class/time.php");
+include("$basepath/class/result.php");
 
 include("$basepath/cryptsuites/1/__init__.php");
 include("$basepath/lib/smarty.php");

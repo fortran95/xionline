@@ -21,10 +21,14 @@
 </head>
 <body>
 
+{if !(isset($navigation) && !$navigation)}
 <div id="navigation">
 <a href="index.php">首页</a>
 |
 <a href="certificates.php">证书管理</a>
 |
 <a href="messagebox.php">消息信箱</a>
+|
+<a href="account.php">退出登录</a>
 </div>
+{/if}
