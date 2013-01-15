@@ -9,8 +9,17 @@ class result{
                 case is_array($c):
                     $ret['data'] = $c;
                     break;
+                case $c instanceof Exception:
+                    $ret['error'] = array(
+                        'message'=>$c->getMessage(),
+                        'code'=>$c->getCode(),
+                        'line'=>$c->getLine(),
+#                        'file'=>$c->getFile(),
+                    );
+                    break;
                 case is_string($c):
                     # TODO translate
+                    $ret['description'] = $c;
                     break;
                 default:
                     break;

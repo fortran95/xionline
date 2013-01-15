@@ -35,8 +35,11 @@ switch($action){
     case 'analyzeCertificate':
         /* Read in $_POST['certificate'] or from database, analyze
            so that user is aware of some information. */
-        $xml = $_POST['certificate'];
-        $response = analyzeCertificate($xml);
+        $xml = isset($_POST['certificate'])?$_POST['certificate']:false;
+        if($xml)
+            $response = analyzeCertificate($xml);
+        else
+            $response = new failure('Data not received.');
         break;
     default:
         exit;

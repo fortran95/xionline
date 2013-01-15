@@ -7,8 +7,8 @@
 <div id="loadCertificate">
     <h1>载入新证书</h1>
     <hr />
-    <textarea></textarea>
-    <button id="loadNewCertificate" text="提交"></button>
+    <textarea id="txtCertificate" name="certificate"></textarea>
+    <button id="btnLoadNewCertificate">提交</button>
 </div>
 <div id="analyzeCertificate">
     <h1>证书信息</h1>
