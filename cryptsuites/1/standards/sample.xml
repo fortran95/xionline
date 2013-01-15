@@ -1,0 +1,10 @@
+<signature expire="2013-12-31T00:00:00Z" from="101112131415161718191A1B1C1D1E1F12345678">
+    <contain>
+        <sure of="49DEFF2E49DEFF2E49DEFF2E49DEFF2E"/>
+        <grant name="Access.Dorm" value="1.601"/>
+        <grant name="Access.Laboratory" value="3"/>
+    </contain>
+    <verify key="39DEFF2E49DEFF2E49DEFF2E49DEFF2E" algo="SHA1">                
+VGhpcyBpcyBhIHNsaWdodCBsb25nIHNlbnRlbmNlIHdoaWNoIGlzIHNvIGxvbmcgdGhhdCBiYXNl 
+    </verify>
+</signature>

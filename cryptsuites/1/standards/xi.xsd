@@ -1,0 +1,63 @@
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+
+    <!--descriptiveString: For writing title and description. -->
+    <xs:simpleType name="descriptiveString">
+        <xs:restriction base="xs:normalizedString">
+            <xs:pattern value="[0-9A-Za-z .,]*"/>
+            <xs:whiteSpace value="collapse"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- publicKeyCipher: all supported public key ciphers. -->
+    <xs:simpleType name="publicKeyCipher">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="RSA"/> 
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- signAlgorithm: all supported public key ciphers. -->
+    <xs:simpleType name="signAlgorithm">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="SHA1"/>
+            <xs:enumeration value="SHA224"/>
+            <xs:enumeration value="SHA256"/>
+            <xs:enumeration value="SHA384"/>
+            <xs:enumeration value="SHA512"/>
+            <xs:enumeration value="WHIRLPOOL"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- certificateID: identifier for all certificates -->
+    <xs:simpleType name="certificateID">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9A-F]{40}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- keyID: identifier for each key blocks -->
+    <xs:simpleType name="keyID">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9A-F]{32}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- base64data: holds base64-encoded data -->
+    <xs:simpleType name="base64data">
+        <xs:restriction base="xs:token">
+            <xs:pattern value="[A-Za-z0-9\+/= \-,:]*"/>
+            <xs:whiteSpace value="collapse"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- grantString: used descripting priviledges -->
+    <xs:simpleType name="grantString">
+        <xs:restriction base="xs:token">
+            <xs:pattern value="[A-Za-z0-9\+/=\-.,:]*"/>
+            <xs:maxLength value="128"/>
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

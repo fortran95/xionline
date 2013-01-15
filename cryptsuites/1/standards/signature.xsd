@@ -1,0 +1,40 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+
+    <xs:include schemaLocation="xi.xsd"/>
+
+    <xs:element name="signature"><xs:complexType>
+        <xs:sequence>
+            <!-- contains: What this signature granted or confirmed. -->
+            <xs:element name="contain"><xs:complexType><xs:sequence>
+
+                <!-- sure: Confirm a key id stated above -->
+                <xs:element name="sure" minOccurs="1" maxOccurs="unbounded"><xs:complexType>
+                    <xs:attribute name="of" type="keyID" use="required"/>
+                </xs:complexType></xs:element>
+
+                <!-- grant: Text string containing a specification of some type of authorities. -->
+                <xs:element name="grant" minOccurs="0" maxOccurs="unbounded"><xs:complexType>
+                    <xs:attribute name="name" type="grantString" use="required"/>
+                    <xs:attribute name="value" type="grantString" use="optional"/>
+                </xs:complexType></xs:element>
+
+            </xs:sequence></xs:complexType></xs:element>
+
+            <!-- verify: holds data verifying above statements. -->
+            <xs:element name="verify"><xs:complexType><xs:simpleContent>
+                <xs:extension base="base64data">
+                    <xs:attribute name="key" type="keyID" use="required"/>
+                    <xs:attribute name="algo" type="signAlgorithm" use="required"/>
+                </xs:extension>
+            </xs:simpleContent></xs:complexType></xs:element>
+        </xs:sequence>
+    
+        <!-- from: Who made this signature. -->
+        <xs:attribute name="from" type="certificateID" use="required"/>
+        <!-- expire: When this signatrue expires. -->
+        <xs:attribute name="expire" type="xs:dateTime" use="optional"/>
+
+    </xs:complexType></xs:element>
+
+</xs:schema>
