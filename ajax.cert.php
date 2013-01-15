@@ -4,6 +4,8 @@ function analyzeCertificate($xml){
         $c = new Certificate($xml);
         $ret = array(
             'id'=>$c->id,
+            'use'=>$c->use,
+            'base'=>$c->base,
         );
         return new success($ret);
     }catch(Exception $e){

@@ -10,7 +10,7 @@
         </block>
     </keys>
     <signatures>
-        <signature expire="2013-12-31T00:00:00Z" from="101112131415161718191A1B1C1D1E1F12345678">
+        <signature expire="2013-12-31T00:00:00Z" from="101112131415161718191A1B1C1D1E1F12345678" id="303132333435363738393A3B3C3D3E3F">
             <contain>
                 <sure of="49DEFF2E49DEFF2E49DEFF2E49DEFF2E"/>
                 <grant name="Access.Dorm" value="1.601"/>
