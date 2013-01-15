@@ -43,6 +43,13 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <!-- signatureID: identifier for each key blocks -->
+    <xs:simpleType name="signatureID">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9A-F]{32}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
     <!-- base64data: holds base64-encoded data -->
     <xs:simpleType name="base64data">
         <xs:restriction base="xs:token">

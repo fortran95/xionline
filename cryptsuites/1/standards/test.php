@@ -2,9 +2,9 @@
 #error_reporting(0);
 
 $xml = new DOMDocument(); 
-$xml->load('./sample.pub.xml');
+$xml->load('./sample.xml');
 
-if (!$xml->schemaValidate('./certificate.xsd')) { 
+if (!$xml->schemaValidate('./signature.xsd')) { 
    echo "invalid";
 } 
 else { 

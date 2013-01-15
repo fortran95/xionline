@@ -34,6 +34,8 @@
         <xs:attribute name="from" type="certificateID" use="required"/>
         <!-- expire: When this signatrue expires. -->
         <xs:attribute name="expire" type="xs:dateTime" use="optional"/>
+        <!-- id: Signature ID, hash of signature containings. -->
+        <xs:attribute name="id" type="signatureID" use="required"/>
 
     </xs:complexType></xs:element>
 

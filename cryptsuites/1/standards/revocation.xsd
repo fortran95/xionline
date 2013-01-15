@@ -1,0 +1,32 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+
+    <xs:include schemaLocation="xi.xsd"/>
+
+    <xs:element name="revocation"><xs:complexType>
+        <xs:sequence>
+            <!-- targets: Revocation which signatures -->
+            <xs:element name="targets"><xs:complexType><xs:sequence>
+
+                <!-- against: revocation target -->
+                <xs:element name="against" minOccurs="1" maxOccurs="unbounded"><xs:complexType>
+                    <xs:attribute name="id" type="signatureID" use="required"/>
+                </xs:complexType></xs:element>
+
+            </xs:sequence></xs:complexType></xs:element>
+
+            <!-- verify: holds data verifying above statements. -->
+            <xs:element name="verify"><xs:complexType><xs:simpleContent>
+                <xs:extension base="base64data">
+                    <xs:attribute name="key" type="keyID" use="required"/>
+                    <xs:attribute name="algo" type="signAlgorithm" use="required"/>
+                </xs:extension>
+            </xs:simpleContent></xs:complexType></xs:element>
+        </xs:sequence>
+    
+        <!-- from: Who made this signature. -->
+        <xs:attribute name="from" type="certificateID" use="required"/>
+
+    </xs:complexType></xs:element>
+
+</xs:schema>
