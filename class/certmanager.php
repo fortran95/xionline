@@ -7,6 +7,21 @@ class certManager{
 
         $this->readAllCertificates();
     }
+    public function insertCertificate($xml){
+    }
+    public function insertSignature($xml){
+        /* TODO
+         *  1) use *cryptsuite* to find out from and to whom this signature is.
+         *  2) load both certificates and verify this signature.
+         *  3) load the signature.
+         */
+    }
+    public function insertRevocation($xml){
+    }
+    public function markCertificate($id, $level){
+    }
+    public function deleteCertificate($id){
+    }
     private function readAllCertificates(){        
         $this->certificates = array();
 

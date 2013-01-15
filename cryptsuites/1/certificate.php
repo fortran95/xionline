@@ -85,6 +85,9 @@ class Certificate{
                 case($name == "keys"):
                     $this->readKeyBlocks();
                     break;
+                case($name == "signatures"):
+                    $this->readSignatures();
+                    break;
                 default:
                     return false;
             }
@@ -142,6 +145,9 @@ class Certificate{
             $this->use = $target->getAttribute('use');
         else
             $this->use = 'public';
+    }
+    private function readSignatures(){
+        $targets = $this->dom->getElementsByTagName('signature');
 
     }
 }

@@ -20,3 +20,11 @@
 
 </head>
 <body>
+
+<div id="navigation">
+<a href="index.php">首页</a>
+|
+<a href="certificates.php">证书管理</a>
+|
+<a href="messagebox.php">消息信箱</a>
+</div>
