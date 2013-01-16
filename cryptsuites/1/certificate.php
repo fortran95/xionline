@@ -15,11 +15,14 @@ class Certificate{
             $this->dom->loadXML($this->certtext);
             if(!$this->dom->schemaValidate($this->standardsPath . '/certificate.xsd'))
                 throw new Exception();
+            $this->initialize();
         }catch(Exception $e){
             throw new CryptoException("given certificate invalid.");
         }
     }
     public function setPassphrase($passphrase){
+        if(!is_string($passphrase))
+            throw new CryptoException("trying to set non-string as passphrase.");
         $this->passphrase = $passphrase;
     }
     public function verifyRestrictions(){
@@ -34,6 +37,7 @@ class Certificate{
         if(substr($this->id,0,strlen($this->baseHash)) != $this->baseHash)
             return False;
 
+        if(!isset($this->keys)) return False;
         foreach($this->keys as $keyID=>$keyBlock){
             if($keyBlock->deriveKeyBlockID($this->id) != $keyID)
                 return False;
@@ -73,56 +77,42 @@ class Certificate{
             throw new CryptoException('trying to sign an invalid certificate.');
     }
 
-    public function __get($name){
-        if(!isset($this->$name)){  # parse certificate on demand
-            switch($name){  # trigger parsing function
-                case($name == "id" || $name == 'use'):
-                    $this->skimRead();
-                    break;
-                case($name == "base" || $name == '_holderID'):
-                    $this->readBase();
-                    break;
-                case($name == "keys"):
-                    $this->readKeyBlocks();
-                    break;
-                case($name == "signatures"):
-                    $this->readSignatures();
-                    break;
-                default:
-                    return false;
-            }
-        }
-        return $this->$name;
+    private function initialize(){
+        $this->skimRead();
+        $this->readBase();
+        $this->readKeyBlocks();
+        $this->readSignatures();
     }
     
     private function readKeyBlocks(){
         if($this->use == 'private' && !$this->passphrase)
             throw new CryptoException('trying to read a private certificate without passphrase.');
 
-        $target = $this->dom->getElementsByTagName('keys')->item(0);
+        $target = $this->dom->getElementsByTagName('keys');
+        $target = $target->item(0);
+        
         $targets = $target->getElementsByTagName('block');
-        $this->keys = array();
-        foreach($targets as $target){
-            try{
-                foreach($targets as $block){
-                    $feed = array(
-                        'type'=>$block->getAttribute('type'),
-                        'passphrase'=>($this->use == 'public')?'':$this->passphrase,
-                        'data'=>$block->textContent,
-                    );
-                    if($block->hasAttribute('expire'))
-                        $feed['expire'] = $block->getAttribute('expire');
-
-                    try{
-                        $key = new KeyBlock($feed);
-                        $this->keys[$block->getAttribute('id')] = $key;
-                    }catch(Exception $e){
-                    }
+        $toSet = array();
+        try{
+            foreach($targets as $block){
+                $feed = array(
+                    'type'=>$block->getAttribute('type'),
+                    'passphrase'=>($this->use == 'public')?'':$this->passphrase,
+                    'data'=>$block->textContent,
+                );
+                if($block->hasAttribute('expire'))
+                    $feed['expire'] = $block->getAttribute('expire');
+                try{
+                    $key = new KeyBlock($feed);
+                    $toSet[$block->getAttribute('id')] = $key;
+                }catch(Exception $e){
                 }
-            }catch(Exception $e){
-                throw new CryptoException('error reading key blocks.');
             }
+        }catch(Exception $e){
+            throw new CryptoException('error reading key blocks.');
         }
+        
+        $this->keys = $toSet;
     }
     private function readBase(){
         $targetBase = $this->dom->getElementsByTagName('base')->item(0);
@@ -154,10 +144,11 @@ class Certificate{
 
 /*
 # Test code
-$xmlpath = "$_cryptsuite_1_standard_path/sample.prv.xml";
+$xmlpath = "$_cryptsuite_1_standard_path/sample.pub.xml";
 $xml = file_get_contents($xmlpath);
 
 $c = new Certificate($xml);
+
 print $c->id . "\n";
 print $c->use . "\n";
 print $c->base['title'] . "\n";
@@ -165,5 +156,10 @@ print $c->base['description'] . "\n";
 print $c->baseHash . "\n";
 print_r(array_keys($c->keys));
 print "\n";
-*/
+
+die('passed test code.');
+
+$d=unserialize(serialize($c));
+print_r($d->keys);
+#*/
 ?>

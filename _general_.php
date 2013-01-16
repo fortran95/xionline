@@ -10,8 +10,7 @@ include("$basepath/config/security.php");
 # Below inclusions, defining classes that may exists in sessions, should be
 # done with priority.
 include("$basepath/class/user.php");
-
-
+include("$basepath/cryptsuites/1/__init__.php");
 
 # Authenticate a session
 include("$basepath/lib/authenticate.php");
@@ -45,7 +44,6 @@ include("$basepath/class/certmanager.php");
 include("$basepath/class/time.php");
 include("$basepath/class/result.php");
 
-include("$basepath/cryptsuites/1/__init__.php");
 include("$basepath/lib/smarty.php");
 
 $render = new Render();

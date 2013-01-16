@@ -5,8 +5,20 @@
     </base>
     <keys>
         <block id="49DEFF2E49DEFF2E49DEFF2E49DEFF2E" expire="2013-12-31T23:59:59Z" type="RSA">
- VGhpcyBpcyBhIHNsaWdodCBsb25nIHNlbnRlbmNlIHdoaWNoIGlzIHNvIGxvbmcgdGhhdCBiYXNl 
- NjQgZW5jb2RpbmcgaXQgd2lsbCBsZWFkIGEgcHJvZHVjaW5nIG9mIG11bHRpcGxlIGxpbmVzLg== 
+-----BEGIN PUBLIC KEY-----
+MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAqUrlr43kwVY/s1oM7TgZ
+AWxweh6VugnMCA8ekUbVCPU+I6Yn8igdXMTjn813bIFDH2D34cGqAnNpAwUa00VA
+gQ52bwq6WyYQl0+2jgIJ184a5rCR5XaDGoEzbCzEhUEi9ZkHzINghRf/LGBfaY49
+tDpB6mBrdygBZ3dSG/n+b85fD7ZAXXhilCeOa4z5C2vaiSStqye7yG5dsswd3k+T
+zAMW+rGF1U0ojhg0Da5PmhP+kI0QJIvavJkcwuE0GXAaTJNzwcrBIiDzoNK04uLR
+Ea8hLeLU8Vj98XzhsNVi3KHJhFZAVzysIecGN5VEmUjh8yjXIDo93o3+T4YrNizp
+4F9mOa/8ldPAqykAzmZl8X44j/BeS6bFFgLBE5OFACkH4LPwMjOGNyV8tGd5TDvc
+RPP0Ud5rElj/GZZBZTjCg+TBw8CDAEr5ZX/qPs18NqMoE9yWuDkqBOhpZIlbH068
+sxkWx3ZPvhSmbvtAoR7+gP1d8TdkEv2ZWrfn2+9vNotY8z+6wgK10uEVsHWrcyG3
+gT4PzWx6Q0y9sEIMcYrqjEMFlPO/uwTXMBawqeJUsQ1PmDzjztprYYj2NFPI54BP
+y1k8NmBUFgFnE82vJUDOTy0ZuY8EPV7z+O237QeCFL/FZLt2OWkvPyVlnFr9iLOm
+lGkPvKhG0A/U/pbFDXH+u00CAwEAAQ==
+-----END PUBLIC KEY-----
         </block>
     </keys>
     <signatures>
@@ -22,3 +34,4 @@ VGhpcyBpcyBhIHNsaWdodCBsb25nIHNlbnRlbmNlIHdoaWNoIGlzIHNvIGxvbmcgdGhhdCBiYXNl
         </signature>
     </signatures>
 </certificate>
+

@@ -11,6 +11,7 @@ function displayCertificateCallback(j){
     if(j.type == 'success'){
         $('#info').html('读取成功。<br />证书ID：' + j.data.id + '<br />' + '标题为：' + j.data.base.title);
     }
+    $.post('ajax.cert.php?action=analyzeCertificateDetails');
 }
 $(function(){
     $('#btnLoadNewCertificate').click(btnLoadNewCertificate_onClick);
