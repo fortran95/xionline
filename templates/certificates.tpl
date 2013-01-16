@@ -5,14 +5,10 @@
     <li><a href="#loadCertificate">载入证书</a></li>
 </ul>
 <div id="currentCertificates">
-    <h1>当前证书</h1>
-    <hr />
-    <div id="list"></div>
 </div>
 <div id="loadCertificate">
-    <h1>载入新证书</h1>
-    <hr />
-    <textarea id="txtCertificate" name="certificate"></textarea>
+    这里您可以粘贴或者上传来自其他用户的证书，以便检查并导入数据库。<p>
+    <textarea id="txtCertificate" name="certificate"></textarea><p>
     <button id="btnLoadNewCertificate">提交</button>
     <button id="btnClearNewCertificate">清空</button>
 </div>
