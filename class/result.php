@@ -5,11 +5,14 @@ class result{
     public function getJSON(){
         $ret = array('type'=>$this->type);
         if(isset($this->content)){
-            switch($c=$this->content){
-                case is_array($c):
+            $c = $this->content;
+            switch($c){
+                case(is_array($c)):
                     $ret['data'] = $c;
                     break;
-                case $c instanceof Exception:
+                case($c instanceof Exception):
+#                    print var_dump($c);
+                    if($this->type != 'failure') break;
                     $ret['error'] = array(
                         'message'=>$c->getMessage(),
                         'code'=>$c->getCode(),
@@ -17,7 +20,7 @@ class result{
 #                        'file'=>$c->getFile(),
                     );
                     break;
-                case is_string($c):
+                case(is_string($c)):
                     # TODO translate
                     $ret['description'] = $c;
                     break;

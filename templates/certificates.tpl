@@ -9,6 +9,7 @@
     <hr />
     <textarea id="txtCertificate" name="certificate"></textarea>
     <button id="btnLoadNewCertificate">提交</button>
+    <button id="btnClearNewCertificate">清空</button>
 </div>
 <div id="analyzeCertificate">
     <h1>证书信息</h1>

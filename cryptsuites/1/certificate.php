@@ -137,8 +137,13 @@ class Certificate{
             $this->use = 'public';
     }
     private function readSignatures(){
-        $targets = $this->dom->getElementsByTagName('signature');
+        $target = $this->dom->getElementsByTagName('signatures')->item(0);
+        $targets = $target->getElementsByTagName('signature');
 
+        $this->signatures = array();
+        foreach($targets as $signature){
+            
+        }
     }
 }
 

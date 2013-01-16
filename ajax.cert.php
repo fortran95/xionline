@@ -1,11 +1,17 @@
 <?
-function listAllKeys(){
-    $response = array();
-    foreach($certManager->certificates as $cert)
-        $response[] = array(
-            'id'=>$c->id,
-        );
-    return new success($response);
+function listAllKeys($u){
+    try{
+        $response = array();
+        $certManager = new certManager($u);
+        foreach($certManager->certificates as $cert){
+            $response[] = array(
+                'id'=>$cert->id,
+            );
+        }
+        return new success($response);
+    }catch(Exception $e){
+        return new failure($e);
+    }
 }
 
 function analyzeCertificate_ReadIn($xml){
@@ -66,7 +72,6 @@ function analyzeCertificate_Examine(){
 include(dirname(__FILE__) . "/_general_.php");
 $u = isset($_SESSION['user'])?$_SESSION['user']:false;
 if(!$u){
-    header("Location: account.php");
     exit;
 }
 if(!isset($_SESSION['ajax.cert.php'])) $_SESSION['ajax.cert.php'] = array();
@@ -76,7 +81,7 @@ switch($action){
     case 'listAllKeys':
         /* List all keys using Certificate Manager.
            Return an array of brief information. */
-        $response = listAllKeys();
+        $response = listAllKeys($u);
         break;
     case 'analyzeCertificate':
         /* Read in $_POST['certificate'] or from database, analyze

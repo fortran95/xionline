@@ -4,7 +4,12 @@ function btnLoadNewCertificate_onClick(){
            displayCertificateCallback,
            'json');
 }
+function btnClearNewCertificate_onClick(){
+    $('#txtCertificate').val('');
+}
 function displayCertificateCallback(j){
+    if(j == null)
+        return;
     if(j.type == 'failure'){
         $('#info').html('Failure');
     }

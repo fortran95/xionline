@@ -16,10 +16,12 @@ class MySQL implements Database{
     public function querySQL($sql){
         $query_resource = mysql_query($sql, $this->con);
         $ret = array();
-        while($row = mysql_fetch_assoc($query_resource)){
-            $ret[] = $row;
+        if($query_resource){
+            while($row = mysql_fetch_assoc($query_resource)){
+                $ret[] = $row;
+            }
+            mysql_free_result($query_resource);
         }
-        mysql_free_result($query_resource);
         return $ret;
     }
     public function lastError(){
