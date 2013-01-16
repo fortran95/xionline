@@ -1,6 +1,6 @@
 $(function(){
     $('button').button();
-    $('#loginFormDialog,#regFormDialog').dialog({
+    $('[id$="FormDialog"]').dialog({
 //        draggable:false,
         resizable:false,
     });
