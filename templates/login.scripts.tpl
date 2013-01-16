@@ -8,5 +8,12 @@ $(function(){
         [ { text:'登录', click: function(){ $('#loginForm').submit(); } } ]);
     $('#regFormDialog').dialog('option','buttons',
         [ { text:'注册', click: function(){ $('#regForm').submit(); } } ]);
-    $('#tabset').tabs();
+
+{if isset($success) || isset($error)}
+    $('#info').dialog({
+        zIndex: 100,
+        resizable:false,
+        dialogClass: 'alert',
+    });
+{/if}
 });

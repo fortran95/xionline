@@ -2,11 +2,27 @@
 
 <div id="info" title="提示">
 {if isset($success)}
-    <strong>{$success}</strong> 已经登录成功。
-    <p><a href="index.php">如果页面没有自动跳转，请点击这里。</a>
+{if $show eq 'reg'}
+注册成功。
+{elseif $show eq 'login'}
+<strong>{$success}</strong> 已经登录成功。
+<p><a href="index.php">如果页面没有自动跳转，请点击这里。</a>
+{/if}
 {/if}
 {if isset($error)}
+{if $show eq 'reg'}
+{if $error eq -1}
+用户名不合规则。
+{elseif $error eq -2}
+用户已经存在。
+{elseif $error eq -3}
+密码和确认密码不一致。
+{else}
+其他原因导致注册失败。
+{/if}
+{elseif $show eq 'login'}
 登录错误，请检查用户名和密码。
+{/if}
 {/if}
 </div>
 <div id="loginFormDialog" title="登录">
