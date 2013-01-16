@@ -9,7 +9,9 @@ class Certificate{
         $this->certtext = $certtext;
 
         if(!$certtext) return;
-
+        
+        $_error_level = error_reporting();
+        error_reporting(0);
         try{
             $this->dom = new DOMDocument();
             $this->dom->loadXML($this->certtext);
@@ -17,8 +19,10 @@ class Certificate{
                 throw new Exception();
             $this->initialize();
         }catch(Exception $e){
+            error_reporting($_error_level);
             throw new CryptoException("given certificate invalid.");
         }
+        error_reporting($_error_level);
     }
     public function setPassphrase($passphrase){
         if(!is_string($passphrase))

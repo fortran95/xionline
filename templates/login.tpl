@@ -1,4 +1,4 @@
-{include file="overall.header.tpl" title="登录" navigation=0}
+{include file="overall.header.tpl" title="登录" navigation=0 bodyScript="login.scripts.tpl"}
 
 {if isset($success)}
 <div class="box loginmessage">
