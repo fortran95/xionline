@@ -29,7 +29,6 @@ class PKC_RSA implements PublicKeyCipher{
                 $this->canSign = $this->canDecrypt = $loadResult1;
                 $this->canEncrypt = $this->canVerifySign = $loadResult2;
             } else {
-#                die('err begin');
                 $this->publickey = new Crypt_RSA();
                 $loadResult = $this->publickey->loadKey($datablock);
                 

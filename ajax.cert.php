@@ -12,13 +12,11 @@ function analyzeCertificate_ReadIn($xml){
     global $_SESSION;
     try{
         $c = new Certificate($xml);
-        die('stop');
         $ret = array(
             'id'=>$c->id,
             'use'=>$c->use,
             'base'=>$c->base,
         );
-        die('here');
         $_SESSION['ajax.cert.php']['analyzeTarget'] = $c;
         return new success($ret);
     }catch(Exception $e){
@@ -42,11 +40,15 @@ function analyzeCertificate_Details($passphrase=''){
             'signatures'=>array(),
         );
 
-        print array_keys($c->keys);
-/*            foreach($c->keys as $attrid=>$keyblock)
-                $ret['keyblocks'][$attrid] = array(
-                
-                );*/
+        foreach($c->keys as $attrid=>$keyblock)
+            $ret['keyblocks'][$attrid] = array(
+                'can'=>array(
+                    'sign'=>$keyblock->canSign(),
+                    'verify'=>$keyblock->canVerifySign(),
+                    'encrypt'=>$keyblock->canEncrypt(),
+                    'decrypt'=>$keyblock->canDecrypt(),
+                ),
+            );
         
 #        if(isset($c->
 

@@ -95,9 +95,9 @@ class KeyBlock{
 
         /* Modify Permissions State */
         $keyExpired = False; # FIXME
-        $this->canEncrypt = $this->key->isInitialized() && $this->key->canEncrypt() && $keyExpired;
+        $this->canEncrypt = $this->key->isInitialized() && $this->key->canEncrypt() && !$keyExpired;
         $this->canDecrypt = $this->key->isInitialized() && $this->key->canDecrypt();
-        $this->canSign = $this->key->isInitialized() && $this->key->canSign() && $keyExpired;
+        $this->canSign = $this->key->isInitialized() && $this->key->canSign() && !$keyExpired;
         $this->canVerifySign = $this->key->isInitialized() && $this->key->canVerifySign();
     }
 }
