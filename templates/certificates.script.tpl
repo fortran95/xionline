@@ -24,6 +24,7 @@ function displayCertificateCallback(j){
 }
 $(function(){
     $('#btnLoadNewCertificate').click(btnLoadNewCertificate_onClick);
+    $('#btnClearNewCertificate').click(btnClearNewCertificate_onClick);
     $(':button').button({
         text:true
     });
