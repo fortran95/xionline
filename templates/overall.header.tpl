@@ -5,7 +5,7 @@
 
 <title>System ξ{if isset($title)} :: {$title}{/if}</title>
 
-<link rel="stylesheet" type="text/css" href="static/css/theme/blitzer/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="static/css/theme/ui-darkness/jquery-ui.css">
 
 <script type="text/javascript" src="static/scripts/common/jquery.js"></script>
 <script type="text/javascript" src="static/scripts/common/jquery-ui.js"></script>

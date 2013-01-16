@@ -35,15 +35,9 @@ switch($action){
         }
         $show = 'reg';
         break;
+    default:
+        unset($_SESSION['user']);
 }
 
-switch($show){
-    case 'reg':
-        $render->display('reg.tpl');
-        break;
-    default:
-        # Log user out first.
-        if(!$action) unset($_SESSION['user']);
-        $render->display('login.tpl');
-}
-?>
+$render->assign('show',$show);
+$render->display('login.tpl');

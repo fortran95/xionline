@@ -1,3 +1,10 @@
 $(function(){
-    
+    $('.button').button({
+        text:true,
+    });
+    $('#loginFormDialog').dialog({
+        draggable:false,
+        buttons:$('#btnLogin'),
+    });
+    $('#tabset').tabs();
 });
