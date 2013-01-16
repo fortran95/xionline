@@ -20,4 +20,9 @@ function displayCertificateCallback(j){
 }
 $(function(){
     $('#btnLoadNewCertificate').click(btnLoadNewCertificate_onClick);
+    $(':button').button({
+        text:true
+    });
+    $('#tabset').tabs();
+    $('#certificateInfo').dialog().dialog('close');
 });

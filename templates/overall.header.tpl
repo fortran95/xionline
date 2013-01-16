@@ -5,11 +5,10 @@
 
 <title>System ξ{if isset($title)} :: {$title}{/if}</title>
 
-<link rel="stylesheet" type="text/css" href="static/css/reset.css">
-<link rel="stylesheet" type="text/css" href="static/css/structure.css">
+<link rel="stylesheet" type="text/css" href="static/css/theme/blitzer/jquery-ui-1.9.2.custom.css">
 
-<script type="text/javascript"
-        src="static/scripts/common/jquery.js"></script>
+<script type="text/javascript" src="static/scripts/common/jquery.js"></script>
+<script type="text/javascript" src="static/scripts/common/jquery-ui.js"></script>
 
 {if isset($bodyScript)}
 <!-- Body Script -->
