@@ -69,7 +69,8 @@ function analyzeCertificate_Examine(){
 include(dirname(__FILE__) . "/_general_.php");
 $u = isset($_SESSION['user'])?$_SESSION['user']:false;
 if(!$u){
-    exit;
+    $response = new failure('Not logged in.');
+    die($response->getJSON());
 }
 if(!isset($_SESSION['ajax.cert.php'])) $_SESSION['ajax.cert.php'] = array();
 $action = isset($_GET['action'])?trim($_GET['action']):false;
@@ -102,6 +103,6 @@ switch($action){
                           :(new failure('Incomplete data provided.'));
         break;
     default:
-        exit;
+        $response = new failure('Unrecognized command.');
 }
 die($response->getJSON());

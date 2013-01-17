@@ -8,6 +8,15 @@ function btnLoadNewCertificate_onClick(){
 function btnClearNewCertificate_onClick(){
     $('#txtCertificate').val('');
 }
+function createMessageDialog(title,description){
+    $('<div>',{
+        title: title,
+    }).html(description)
+      .dialog({
+        close: function(){ $(this).remove(); },
+        resizable: false,
+      });
+}
 function createCertificateDialog(jdata,xml){
     var dialogID = 'showDialog_' + jdata.id;
     $('<div>',{
@@ -27,6 +36,8 @@ function createCertificateDialog(jdata,xml){
       '<div id="baseInfo"></div>' +
       '<h2><a href="#">密钥信息</a></h2>' + 
       '<div id="keyInfo"></div>' +
+      '<h2><a href="#">签名信息</a></h2>' + 
+      '<div id="signatureInfo"></div>' +
       '</div>')
         .appendTo('#' + dialogID)
         .accordion({
@@ -52,13 +63,13 @@ function displayCertificateCallback(j,xml){
     if(j == null)
         return;
     if(j.type == 'failure'){
-        $('#certificateInfo')
-            .html('Failure')
-            .dialog('open');
+        if(j.description != null)
+            createMessageDialog('错误',j.description);
+        if(j.error != null)
+            createMessageDialog('程序异常',j.error.message);
     }
     if(j.type == 'success')
         createCertificateDialog(j.data,xml);
-    $.post('ajax.cert.php?action=analyzeCertificateDetails');
 }
 $(function(){
     $('#btnLoadNewCertificate').click(btnLoadNewCertificate_onClick);
