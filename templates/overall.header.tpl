@@ -51,6 +51,25 @@ position: absolute;
 }
 </style>
 
+<script type="text/javascript">
+$(function(){
+    $( "#navigation" )
+        .buttonset()
+        .click(function(){ 
+            var choosenPage = $('input[name="navigation"]:checked').val();
+            if(choosenPage == null)
+                return;
+            if(window.location.pathname.indexOf(choosenPage) < 0){
+                window.location.href = choosenPage;
+            }
+        });
+    $('input[name="navigation"]').each(function(){
+        if( window.location.pathname.indexOf( $(this).val() ) >= 0){
+            $(this).trigger('click');
+        }
+    });
+});
+</script>
 {if isset($bodyScript)}
 <!-- Body Script -->
 <script type="text/javascript">
@@ -62,13 +81,6 @@ position: absolute;
 <body>
 
 {if !(isset($navigation) && !$navigation)}
-<div id="navigation">
-<a href="index.php">首页</a>
-|
-<a href="certificates.php">证书管理</a>
-|
-<a href="messagebox.php">消息信箱</a>
-|
-<a href="account.php">退出登录</a>
-</div>
+{include file="plugin.navigation.tpl"}
+<p>
 {/if}

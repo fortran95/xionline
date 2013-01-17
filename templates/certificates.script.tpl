@@ -15,6 +15,9 @@ function createMessageDialog(title,description){
       .dialog({
         close: function(){ $(this).remove(); },
         resizable: false,
+        buttons: {
+            '确定': function(){ $(this).dialog('close'); },
+        },
       });
 }
 function createCertificateDialog(jdata,xml){
