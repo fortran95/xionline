@@ -8,7 +8,49 @@
 </div>
 <div id="loadCertificate">
     这里您可以粘贴或者上传来自其他用户的证书，以便检查并导入数据库。<p>
-    <textarea id="txtCertificate" name="certificate"></textarea><p>
+    <textarea id="txtCertificate" name="certificate">
+
+
+
+    <certificate id="0000000000000000000000000000000011111111" use="public">
+    <base>
+        <title>Title</title>
+        <description>Some Description</description>
+    </base>
+    <keys>
+        <block id="49DEFF2E49DEFF2E49DEFF2E49DEFF2E" expire="2013-12-31T23:59:59Z" type="RSA">
+-----BEGIN PUBLIC KEY-----
+MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAqUrlr43kwVY/s1oM7TgZ
+AWxweh6VugnMCA8ekUbVCPU+I6Yn8igdXMTjn813bIFDH2D34cGqAnNpAwUa00VA
+gQ52bwq6WyYQl0+2jgIJ184a5rCR5XaDGoEzbCzEhUEi9ZkHzINghRf/LGBfaY49
+tDpB6mBrdygBZ3dSG/n+b85fD7ZAXXhilCeOa4z5C2vaiSStqye7yG5dsswd3k+T
+zAMW+rGF1U0ojhg0Da5PmhP+kI0QJIvavJkcwuE0GXAaTJNzwcrBIiDzoNK04uLR
+Ea8hLeLU8Vj98XzhsNVi3KHJhFZAVzysIecGN5VEmUjh8yjXIDo93o3+T4YrNizp
+4F9mOa/8ldPAqykAzmZl8X44j/BeS6bFFgLBE5OFACkH4LPwMjOGNyV8tGd5TDvc
+RPP0Ud5rElj/GZZBZTjCg+TBw8CDAEr5ZX/qPs18NqMoE9yWuDkqBOhpZIlbH068
+sxkWx3ZPvhSmbvtAoR7+gP1d8TdkEv2ZWrfn2+9vNotY8z+6wgK10uEVsHWrcyG3
+gT4PzWx6Q0y9sEIMcYrqjEMFlPO/uwTXMBawqeJUsQ1PmDzjztprYYj2NFPI54BP
+y1k8NmBUFgFnE82vJUDOTy0ZuY8EPV7z+O237QeCFL/FZLt2OWkvPyVlnFr9iLOm
+lGkPvKhG0A/U/pbFDXH+u00CAwEAAQ==
+-----END PUBLIC KEY-----
+        </block>
+    </keys>
+    <signatures>
+        <signature expire="2013-12-31T00:00:00Z" from="101112131415161718191A1B1C1D1E1F12345678" id="303132333435363738393A3B3C3D3E3F">
+            <contain>
+                <sure of="49DEFF2E49DEFF2E49DEFF2E49DEFF2E"/>
+                <grant name="Access.Dorm" value="1.601"/>
+                <grant name="Access.Laboratory" value="3"/>
+            </contain>
+            <verify key="39DEFF2E49DEFF2E49DEFF2E49DEFF2E" algo="SHA1">                
+VGhpcyBpcyBhIHNsaWdodCBsb25nIHNlbnRlbmNlIHdoaWNoIGlzIHNvIGxvbmcgdGhhdCBiYXNl 
+            </verify>
+        </signature>
+    </signatures>
+</certificate>
+
+
+    </textarea><p>
     <button id="btnLoadNewCertificate">提交</button>
     <button id="btnClearNewCertificate">清空</button>
 </div>

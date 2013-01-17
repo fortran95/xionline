@@ -23,25 +23,22 @@ function analyzeCertificate_ReadIn($xml){
             'use'=>$c->use,
             'base'=>$c->base,
         );
-        $_SESSION['ajax.cert.php']['analyzeTarget'] = $c;
         return new success($ret);
     }catch(Exception $e){
         return new failure($e);
     }
 }
-function analyzeCertificate_Details($passphrase=''){
+function analyzeCertificate_Details($xml,$passphrase=''){
     global $_SESSION;
-    if(!isset($_SESSION['ajax.cert.php']['analyzeTarget']))
-        return new failure('Analyze target lost.');
-    if(!(($c=$_SESSION['ajax.cert.php']['analyzeTarget']) instanceof Certificate)){
-        return new failure('Analyze target corrupted.' . var_dump($c));
-    }
-
     try{
+        $c = new Certificate($xml);
         if($c->use == 'private')
             $c->setPassphrase($passphrase);
 
         $ret = array(
+            'id'=>$c->id,
+            'use'=>$c->use,
+            'base'=>$c->base,
             'keyblocks'=>array(),
             'signatures'=>array(),
         );
@@ -87,14 +84,24 @@ switch($action){
         /* Read in $_POST['certificate'] or from database, analyze
            so that user is aware of some information. */
         $xml = isset($_POST['certificate'])?$_POST['certificate']:false;
-        $response = ($xml)?analyzeCertificate_ReadIn($xml):(new failure('Data not received.'));
+        $response = ($xml)?analyzeCertificate_ReadIn($xml)
+                          :(new failure('Data not received.'));
         break;
     case 'analyzeCertificateDetails':
+        /* Similar to analyzeCertificate, but provides a more detailed
+           set of information. The reason to use two functions, is, 
+           private certificates' format examination have to get their
+           passphrases entered in advance to be performed. Above function
+           will just provide users with some hints about this certificate
+           so that they will come up with passphrases.
+           Since high performance is not the top consideration in this
+           project, we just send $xml back again.*/
         $passphrase = isset($_POST['passphrase'])?$_POST['passphrase']:'';
-        $response = analyzeCertificate_Details($passphrase);
+        $xml = isset($_POST['certificate'])?$_POST['certificate']:false;
+        $response = ($xml)?analyzeCertificate_Details($xml,$passphrase)
+                          :(new failure('Incomplete data provided.'));
         break;
     default:
         exit;
 }
 die($response->getJSON());
-?>
